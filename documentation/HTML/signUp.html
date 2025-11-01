@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+</head>
+<body>
+    <main>
+        <form>
+            <h1>Регистрация</h1>
+            <a class="warning closed" id="emtyFields"></a>
+            <p>Имя пользователя</p>
+            <input type="text" id="username" placeholder="Businessman3000" required>
+            <p>Почта</p>
+            <input type="text" id="email" placeholder="abc@gmail.com" required>
+            <a class="warning closed" id="wrongEmail"></a>
+            <p>Телеграм</p>
+            <input type="text" id="telegram_tag" placeholder="@businessman3000" required>
+            <p>Пароль</p>
+            <input type="password" id="password" placeholder="Пароль" required>
+            <a class="warning closed" id="wrongPassword"></a>
+            <p>Поторите пароль</p>
+            <input type="password" id="secondPassword" placeholder="Повторите пароль" required>
+            <a class="warning closed" id="wrongPassword"></a>
+            <button id="button">Зарегистрироаться</button>
+        </form>
+        <a href="signIn.html">Уже зарегистрирован</a>
+    </main>
+</body>
+<script src="react/App.js"></script>
+</html>

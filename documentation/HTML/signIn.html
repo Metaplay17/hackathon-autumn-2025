@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в аккаунт</title>
+</head>
+<body>
+    <main>
+        <form>
+            <h1>Вход</h1>
+            <a class="warning closed" id="emtyFields"></a>
+            <p>Почта</p>
+            <input type="text" id="email" placeholder="abc@gmail.com" required>
+            <a class="warning closed" id="wrongEmail"></a>
+            <p>Пароль</p>
+            <input type="password" id="password" placeholder="Пароль" required>
+            <a class="warning closed" id="wrongPassword"></a>
+            <button id="button">Войти</button>
+        </form>
+        <a href="signUp.html">Регистрация</a>
+    </main>
+</body>
+<script src="react/App.js"></script>
+</html>
