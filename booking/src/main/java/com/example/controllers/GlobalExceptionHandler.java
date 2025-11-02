@@ -4,14 +4,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.example.dto.DefaultResponse;
+import com.example.exceptions.BookingNotFoundException;
 import com.example.exceptions.EmailAlreadyUsedException;
 import com.example.exceptions.InvalidEmailPasswordCombinationException;
 import com.example.exceptions.InvalidPasswordException;
+import com.example.exceptions.RoomNotFoundException;
+import com.example.exceptions.UserNotFoundException;
 import com.example.exceptions.UsernameAlreadyUsedException;
 
 @RestControllerAdvice
@@ -51,8 +55,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<DefaultResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         StringBuilder messages = new StringBuilder();
         ex.getBindingResult().getFieldErrors().forEach(error ->
-            messages.append(": ")
-                    .append(error.getDefaultMessage())
+            messages.append(error.getDefaultMessage())
                     .append("; ")
         );
 
@@ -63,5 +66,36 @@ public class GlobalExceptionHandler {
         DefaultResponse response = new DefaultResponse(HttpStatus.BAD_REQUEST, message);
         log.warn(message);
         return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<DefaultResponse> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+        String message = "Неверный формат JSON, попробуйте проверить типы данных";
+        
+        log.warn("JSON parse error", ex.getMessage());
+        
+        return ResponseEntity.badRequest()
+                .body(new DefaultResponse(HttpStatus.BAD_REQUEST, message));
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<DefaultResponse> handleUserNotFoundException(UserNotFoundException ex) {
+        DefaultResponse response = new DefaultResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+        log.warn(ex.getMessage());
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @ExceptionHandler(BookingNotFoundException.class)
+    public ResponseEntity<DefaultResponse> handleBookingNotFoundException(BookingNotFoundException ex) {
+        DefaultResponse response = new DefaultResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+        log.warn(ex.getMessage());
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @ExceptionHandler(RoomNotFoundException.class)
+    public ResponseEntity<DefaultResponse> handleRoomNotFoundException(RoomNotFoundException ex) {
+        DefaultResponse response = new DefaultResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+        log.warn(ex.getMessage());
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 }

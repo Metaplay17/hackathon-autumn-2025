@@ -9,9 +9,10 @@ import com.example.models.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findById(Long id);
+    Optional<User> findById(Integer id);
     Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
     boolean existsByUsername(String username);
+    Optional<User> findByUsername(String username);
     Optional<User> findByEmailAndPasswordHash(String email, String passwordHash);
 }

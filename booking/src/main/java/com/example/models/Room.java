@@ -21,8 +21,8 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "number", nullable = false)
+    private Integer number;
 
     @Column(name = "capability", nullable = false)
     private Integer capability;

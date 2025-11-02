@@ -33,6 +33,10 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public void createUser(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new EmailAlreadyUsedException();
@@ -60,5 +64,14 @@ public class UserService {
             }
         }
         throw new InvalidEmailPasswordCombinationException();
+    }
+
+    public boolean isAdmin(int userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user.getPrivilegeLevel() >= 3;
+        }
+        return false;
     }
 }

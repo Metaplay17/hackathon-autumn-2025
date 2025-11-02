@@ -1,6 +1,7 @@
 com/example/dto/FloorRoomsResponse.class
 com/example/App.class
 com/example/dto/RegisterRequest.class
+com/example/exceptions/UserNotFoundException.class
 com/example/dto/BookingsFloorResponse.class
 com/example/services/BookingService.class
 com/example/models/Booking.class
@@ -17,14 +18,19 @@ com/example/controllers/RoomController.class
 com/example/dto/DefaultResponse.class
 com/example/dto/RoomDto.class
 com/example/controllers/GlobalExceptionHandler.class
+com/example/dto/admin/UpdateRoomRequest.class
 com/example/config/AppConfig.class
 com/example/models/BookingTime.class
 com/example/controllers/BookingController.class
 com/example/models/User.class
+com/example/exceptions/BookingNotFoundException.class
 com/example/dto/LoginRequest.class
 com/example/exceptions/IncorrectStartEndTimeException.class
 com/example/util/Validator.class
+com/example/dto/admin/UpdateBookingRequest.class
+com/example/controllers/AdminController.class
 com/example/repositories/BookingRepository.class
+com/example/exceptions/RoomNotFoundException.class
 com/example/security/JwtService.class
 com/example/security/JwtAuthenticationFilter.class
 com/example/dto/BookingDto.class

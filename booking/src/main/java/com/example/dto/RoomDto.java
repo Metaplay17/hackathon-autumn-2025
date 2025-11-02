@@ -6,9 +6,9 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class RoomDto {
-    private int id;
-    private String name;
-    private int capability;
-    private int floor;
+    private Integer id;
+    private Integer number;
+    private Integer capability;
+    private Integer floor;
     private boolean isOpen;
 }

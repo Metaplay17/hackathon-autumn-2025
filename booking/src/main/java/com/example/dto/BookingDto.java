@@ -8,9 +8,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class BookingDto {
-    private int id;
+    private Integer id;
     private String username;
-    private int roomId;
+    private Integer roomId;
     private LocalDateTime start;
-    private int durationMinutes;
+    private Integer durationMinutes;
 }
