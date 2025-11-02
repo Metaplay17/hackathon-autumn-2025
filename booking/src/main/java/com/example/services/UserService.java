@@ -49,6 +49,9 @@ public class UserService {
     }
 
     public Integer authUser(LoginRequest request) {
+        if (!Validator.validatePassword(request.getPassword())) {
+            throw new InvalidPasswordException();
+        }
         Optional<User> userOptional = userRepository.findByEmail(request.getEmail());
         if (userOptional.isPresent()) {
             User user = userOptional.get();

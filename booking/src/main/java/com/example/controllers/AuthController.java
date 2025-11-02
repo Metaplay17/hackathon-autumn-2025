@@ -1,5 +1,7 @@
 package com.example.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,8 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+
+    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
     
     private final UserService userService;
     private final JwtService jwtService;
@@ -31,6 +35,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<DefaultResponse> register(@Valid @RequestBody RegisterRequest request) {
         userService.createUser(request);
+        log.info("Пользователь {} зарегистировался", request.getUsername());
         return ResponseEntity.ok(new DefaultResponse(HttpStatus.OK, "OK"));
     }
 
@@ -38,6 +43,7 @@ public class AuthController {
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
         Integer userId = userService.authUser(request);
         String token = jwtService.generateToken(userId);
+        log.info("Пользователь {} авторизовался", request.getEmail());
         return ResponseEntity.ok(new LoginResponse(HttpStatus.OK, "OK", token));
     }
 }
