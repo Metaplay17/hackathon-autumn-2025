@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.BookingDto;
-import com.example.dto.BookingsFloorResponse;
-import com.example.dto.DefaultResponse;
-import com.example.dto.MakeBookingRequest;
+import com.example.dto.requests.MakeBookingRequest;
+import com.example.dto.responses.BookingsFloorResponse;
+import com.example.dto.responses.DefaultResponse;
 import com.example.exceptions.UserNotFoundException;
 import com.example.models.User;
 import com.example.services.BookingService;

@@ -7,10 +7,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class BookingDto {
+public class BookingProfileDto {
     private Integer id;
-    private String username;
-    private RoomDto room;
+    private String roomName;
     private LocalDateTime start;
     private Integer durationMinutes;
 }

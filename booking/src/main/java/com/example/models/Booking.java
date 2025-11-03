@@ -20,6 +20,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Booking {
+
+    public Booking(User user, Room room, LocalDateTime start, Integer durationMinutes) {
+        this.user = user;
+        this.room = room;
+        this.start = start;
+        this.durationMinutes = durationMinutes;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

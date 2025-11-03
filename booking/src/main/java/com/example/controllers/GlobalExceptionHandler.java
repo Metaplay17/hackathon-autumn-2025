@@ -9,10 +9,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.example.dto.DefaultResponse;
+import com.example.dto.responses.DefaultResponse;
 import com.example.exceptions.BookingAlreadyUsedException;
 import com.example.exceptions.BookingNotFoundException;
 import com.example.exceptions.EmailAlreadyUsedException;
+import com.example.exceptions.IncorrectStartEndTimeException;
 import com.example.exceptions.InvalidEmailPasswordCombinationException;
 import com.example.exceptions.InvalidPasswordException;
 import com.example.exceptions.RoomNotFoundException;
@@ -102,6 +103,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BookingAlreadyUsedException.class)
     public ResponseEntity<DefaultResponse> handleRoomNotFoundException(BookingAlreadyUsedException ex) {
+        DefaultResponse response = new DefaultResponse(HttpStatus.CONFLICT, ex.getMessage());
+        log.warn(ex.getMessage());
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @ExceptionHandler(IncorrectStartEndTimeException.class)
+    public ResponseEntity<DefaultResponse> handleIncorrectStartEndTimeException(IncorrectStartEndTimeException ex) {
         DefaultResponse response = new DefaultResponse(HttpStatus.CONFLICT, ex.getMessage());
         log.warn(ex.getMessage());
         return ResponseEntity.status(response.getStatus()).body(response);

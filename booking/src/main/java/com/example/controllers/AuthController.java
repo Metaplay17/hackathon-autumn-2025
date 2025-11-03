@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.dto.DefaultResponse;
-import com.example.dto.LoginRequest;
-import com.example.dto.LoginResponse;
-import com.example.dto.RegisterRequest;
+import com.example.dto.requests.LoginRequest;
+import com.example.dto.requests.RegisterRequest;
+import com.example.dto.responses.DefaultResponse;
+import com.example.dto.responses.LoginResponse;
+import com.example.models.User;
 import com.example.security.JwtService;
 import com.example.services.UserService;
 
@@ -41,9 +42,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-        Integer userId = userService.authUser(request);
-        String token = jwtService.generateToken(userId);
+        User user = userService.authUser(request);
+        String token = jwtService.generateToken(user.getId());
         log.info("Пользователь {} авторизовался", request.getEmail());
-        return ResponseEntity.ok(new LoginResponse(HttpStatus.OK, "OK", token));
+        return ResponseEntity.ok(new LoginResponse(HttpStatus.OK, "OK", token, user.getPrivilegeLevel()));
     }
 }

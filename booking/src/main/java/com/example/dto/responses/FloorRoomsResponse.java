@@ -1,8 +1,10 @@
-package com.example.dto;
+package com.example.dto.responses;
 
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+
+import com.example.dto.RoomDto;
 
 
 public class FloorRoomsResponse extends DefaultResponse {

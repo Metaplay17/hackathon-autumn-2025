@@ -12,7 +12,6 @@ public class main {
 		LocalDateTime time = startTime;
 
 		while (time.isBefore(endTime)) {
-			
 			listTimes.add(time);
 			time = time.plusMinutes(bookingDuration);
 		}
@@ -23,9 +22,7 @@ public class main {
 			}
 	    	
 	    }
-
 		return list;
-
 	}
 
 	public static void main(String[] args) {

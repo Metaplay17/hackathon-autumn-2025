@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.dto.DefaultResponse;
+import com.example.dto.ProfileDto;
+import com.example.dto.responses.ProfileResponse;
 import com.example.services.UserService;
 
 @RestController
@@ -20,9 +21,10 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/id")
-    public ResponseEntity<DefaultResponse> getId(Authentication authentication) {
+    @GetMapping("/profile")
+    public ResponseEntity<ProfileResponse> getId(Authentication authentication) {
         Integer userId = (Integer)authentication.getPrincipal();
-        return ResponseEntity.ok(new DefaultResponse(HttpStatus.OK, userId.toString()));
+        ProfileDto profileDto = userService.getUserProfile(userId);
+        return ResponseEntity.ok(new ProfileResponse(HttpStatus.OK, "OK", profileDto.getUsername(), profileDto.getBookings()));
     }
 }
