@@ -11,6 +11,7 @@ com/example/dto/LoginResponse.class
 com/example/exceptions/InvalidEmailPasswordCombinationException.class
 com/example/repositories/RoomRepository.class
 com/example/models/Room.class
+com/example/dto/MakeBookingRequest.class
 com/example/services/UserService.class
 com/example/util/PasswordHasher.class
 com/example/services/BookingTimeGenerator.class
@@ -28,6 +29,7 @@ com/example/dto/LoginRequest.class
 com/example/exceptions/IncorrectStartEndTimeException.class
 com/example/util/Validator.class
 com/example/dto/admin/UpdateBookingRequest.class
+com/example/exceptions/BookingAlreadyUsedException.class
 com/example/controllers/AdminController.class
 com/example/repositories/BookingRepository.class
 com/example/exceptions/RoomNotFoundException.class

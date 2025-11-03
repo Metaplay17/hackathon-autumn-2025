@@ -14,10 +14,12 @@
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/FloorRoomsResponse.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/LoginRequest.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/LoginResponse.java
+/home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/MakeBookingRequest.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/RegisterRequest.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/RoomDto.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/admin/UpdateBookingRequest.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/admin/UpdateRoomRequest.java
+/home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/exceptions/BookingAlreadyUsedException.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/exceptions/BookingNotFoundException.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/exceptions/EmailAlreadyUsedException.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/exceptions/IncorrectStartEndTimeException.java

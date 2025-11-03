@@ -15,9 +15,13 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     List<Booking> findByUser(User user);
     List<Booking> findByRoom(Room room);
 
-    @Query("SELECT b FROM Booking b WHERE b.start > CURRENT_TIMESTAMP AND b.room.id = :roomId")
+    @Query("SELECT b FROM Booking b " +
+        "WHERE FUNCTION('date', b.start) >= CURRENT_DATE " +
+        "AND b.room.id = :roomId")
     List<Booking> findByRoomIdAndActiveDate(Integer roomId);
 
-    @Query("SELECT b FROM Booking b WHERE b.start > CURRENT_TIMESTAMP AND b.room.floor = :floor")
+    @Query("SELECT b FROM Booking b " +
+        "WHERE FUNCTION('date', b.start) >= CURRENT_DATE " +
+        "AND b.room.floor = :floor")
     List<Booking> findByFloorAndActiveDate(Integer floor);
 }

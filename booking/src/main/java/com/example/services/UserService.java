@@ -25,7 +25,7 @@ public class UserService {
         this.passwordHasher = passwordHasher;
     }
 
-    public Optional<User> getUserById(Long id) {
+    public Optional<User> getUserById(Integer id) {
         return userRepository.findById(id);
     }
 

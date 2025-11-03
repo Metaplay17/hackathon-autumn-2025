@@ -7,7 +7,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.dto.BookingDto;
+import com.example.dto.MakeBookingRequest;
 import com.example.dto.admin.UpdateBookingRequest;
+import com.example.exceptions.BookingAlreadyUsedException;
 import com.example.exceptions.BookingNotFoundException;
 import com.example.exceptions.UserNotFoundException;
 import com.example.models.Booking;
@@ -26,19 +28,38 @@ public class BookingService {
         List<Booking> bookings = bookingRepository.findByFloorAndActiveDate(floor);
         List<BookingDto> bookingDtos = new ArrayList<BookingDto>();
         for (Booking b : bookings) {
-            bookingDtos.add(new BookingDto(b.getId(), b.getUser().getUsername(), b.getRoom().getId(), b.getStart(), b.getDurationMinutes()));
+            String username = null;
+            if (b.getUser() != null) {
+                username = b.getUser().getUsername();
+            }
+            bookingDtos.add(new BookingDto(b.getId(), username, b.getRoom().getId(), b.getStart(), b.getDurationMinutes()));
         }
         return bookingDtos;
     }
 
     public void updateBooking(UpdateBookingRequest request, Optional<User> newUser) {
         if (!newUser.isPresent()) {
-            throw new UserNotFoundException("Пользователь с username не существует");
+            throw new UserNotFoundException("Пользователь с таким username не существует");
         }
         User user = newUser.get();
         Optional<Booking> bookingOptional = bookingRepository.findById(request.getBookingId());
         if (bookingOptional.isPresent()) {
             Booking booking = bookingOptional.get();
+            booking.setUser(user);
+            bookingRepository.saveAndFlush(booking);
+        }
+        else {
+            throw new BookingNotFoundException("Бронь с id = " + request.getBookingId() + " не найдена");
+        }
+    }
+
+    public void makeBooking(User user, MakeBookingRequest request) {
+        Optional<Booking> bookingOptional = bookingRepository.findById(request.getBookingId());
+        if (bookingOptional.isPresent()) {
+            Booking booking = bookingOptional.get();
+            if (booking.getUser() != null) {
+                throw new BookingAlreadyUsedException("Бронь уже занята");
+            }
             booking.setUser(user);
             bookingRepository.saveAndFlush(booking);
         }
