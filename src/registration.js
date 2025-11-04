@@ -38,6 +38,10 @@ function Registration() {
             newErrors.secondPassword = 'Пароли не совпадают';
         }
 
+        if (formData.telegram_tag.length < 5 || formData.telegram_tag.length > 12) {
+            newErrors.telegram_tag = 'Длина телеграм ID должна быть от 5 до 12 символов';
+        }
+
         if (formData.telegram_tag && !formData.telegram_tag.startsWith('@')) {
             newErrors.telegram_tag = 'Телеграм должен начинаться с @';
         }
@@ -51,6 +55,7 @@ function Registration() {
         if (validateForm()) {
             console.log('Форма регистрации отправлена:', formData);
             alert('Регистрация успешна!');
+            // ДОБАВТЬ ОТПРАВКУ РЕГИСТРАЦИИ УЧАСТНИКА
         }
     };
 
@@ -99,11 +104,11 @@ function Registration() {
                     <div className="warning">{errors.telegram_tag}</div>
                 )}
 
-                <p>Телеграм</p>
+                <p>Телеграм ID</p>
                 <input 
                     type="text" 
-                    id="telegram_tag" 
-                    placeholder="@businessman3000" 
+                    id="telegramId" 
+                    placeholder="0000" 
                     value={formData.telegram_tag}
                     onChange={handleChange}
                     required 

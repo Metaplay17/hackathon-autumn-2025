@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById('main'));
 
 root.render(
   <React.StrictMode>
-    <Registration />
+    <SignIn />
   </React.StrictMode>
 );
 reportWebVitals();

@@ -20,7 +20,7 @@ function SignIn() {
         if (!emailRegex.test(formData.email)) {
             newErrors.email = 'Введите корректный email';
         }
-        
+
         if (formData.password) {
             if (formData.password.length < 8) {
                 newErrors.password = 'Пароль должен содержать минимум 8 символов';
@@ -39,6 +39,8 @@ function SignIn() {
         if (validateForm()) {
             console.log('Форма отправлена:', formData);
             alert('Вход выполнен успешно!');
+            // ДОБАВИТЬ ПРОВЕРКУ НА ПРИНАДЛЕЖНОСТЬ К БД
+            // ДОБАВИТЬ ПЕРЕХОД НА ДРУГУЮ СТРАНИЦУ
         }
     };
 
