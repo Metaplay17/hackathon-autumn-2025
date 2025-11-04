@@ -41,12 +41,14 @@ public class BookingController {
 
     @GetMapping("/get/{floor}")
     public ResponseEntity<BookingsFloorResponse> getFloorBookings(@PathVariable Integer floor) {
+        log.info("Запрос на получение слотов этажа = {}", floor);
         List<BookingDto> bookings = bookingService.getBookingsByFloor(floor);
         return ResponseEntity.ok(new BookingsFloorResponse(HttpStatus.OK, "OK", bookings));
     }
 
     @PostMapping("/make")
     public ResponseEntity<DefaultResponse> makeBooking(Authentication authentication, @Valid @RequestBody MakeBookingRequest request) {
+        log.info("Запрос на бронирование слота bookingId={} от userId={}", request.getBookingId(), authentication.getPrincipal());
         Optional<User> userOptional = userService.getUserById((Integer)authentication.getPrincipal());
         if (userOptional.isPresent()) {
             User user = userOptional.get();

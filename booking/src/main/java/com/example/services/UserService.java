@@ -46,6 +46,10 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    public Optional<User> getUserByTelegramId(Long telegramId) {
+        return userRepository.findByTelegramId(telegramId);
+    }
+
     public void createUser(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new EmailAlreadyUsedException();
@@ -57,7 +61,7 @@ public class UserService {
             throw new InvalidPasswordException();
         }
         String passwordHash = passwordHasher.hashPassword(request.getPassword());
-        User newUser = new User(request.getEmail(), request.getUsername(), passwordHash);
+        User newUser = new User(request.getEmail(), request.getUsername(), passwordHash, request.getTelegramId());
         userRepository.save(newUser);
     }
 

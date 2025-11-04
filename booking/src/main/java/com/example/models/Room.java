@@ -31,7 +31,7 @@ public class Room {
     private Integer floor;
 
     @Column(name = "is_open", nullable = false)
-    private Boolean isOpen;
+    private Boolean isOpen = true;
 
     @OneToMany(mappedBy = "room")
     private List<Booking> bookings;

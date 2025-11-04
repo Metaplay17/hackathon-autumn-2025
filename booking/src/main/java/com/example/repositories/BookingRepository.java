@@ -47,4 +47,10 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
         AND CURRENT_TIMESTAMP <= (b.start + (b.duration_minutes * INTERVAL '1 minute'))
         """, nativeQuery = true)
     List<Booking> findActiveUserBookings(Integer userId);
+
+    @Modifying
+    @Query("DELETE FROM Booking b " +
+    "WHERE FUNCTION('date', b.start) >= CURRENT_DATE " +
+    "AND b.room.id = :roomId")
+    void deleteActiveBookingsByRoomId(Integer roomId);
 }

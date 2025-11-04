@@ -5,9 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.example.dto.responses.DefaultResponse;
 import com.example.exceptions.BookingAlreadyUsedException;
@@ -112,6 +114,31 @@ public class GlobalExceptionHandler {
     public ResponseEntity<DefaultResponse> handleIncorrectStartEndTimeException(IncorrectStartEndTimeException ex) {
         DefaultResponse response = new DefaultResponse(HttpStatus.CONFLICT, ex.getMessage());
         log.warn(ex.getMessage());
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<DefaultResponse> handleException(HttpRequestMethodNotSupportedException ex) {
+        DefaultResponse response = new DefaultResponse(HttpStatus.METHOD_NOT_ALLOWED, "Недопустимый тип запроса");
+        log.warn(ex.getMessage());
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<DefaultResponse> handleException(NoResourceFoundException ex) {
+        DefaultResponse response = new DefaultResponse(HttpStatus.NOT_FOUND, "Запрашиваемый ресурс не найден");
+        log.warn(ex.getMessage());
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<DefaultResponse> handleException(Exception ex) {
+        DefaultResponse response = new DefaultResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Внутренняя ошибка сервера");
+        log.error(ex.getMessage());
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }

@@ -1,1 +1,4 @@
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/test/java/com/example/AppTest.java
+/home/kirol/java-projects/hackathon-autumn-2025/booking/src/test/java/com/example/repositories/BookingRepositoryTest.java
+/home/kirol/java-projects/hackathon-autumn-2025/booking/src/test/java/com/example/repositories/RoomRepositoryTest.java
+/home/kirol/java-projects/hackathon-autumn-2025/booking/src/test/java/com/example/repositories/UserRepositoryTest.java

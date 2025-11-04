@@ -113,4 +113,9 @@ public class BookingService {
 			}
 	    }
 	}
+
+    @Transactional
+    public void cancelRoomBookings(Integer roomId) {
+        bookingRepository.deleteActiveBookingsByRoomId(roomId);
+    }
 }

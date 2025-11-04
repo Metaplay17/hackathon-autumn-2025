@@ -27,10 +27,9 @@ com/example/exceptions/InvalidPasswordException.class
 com/example/repositories/UserRepository.class
 com/example/dto/responses/BookingsFloorResponse.class
 com/example/services/UserService.class
-com/example/services/BookingTimeGenerator.class
+com/example/dto/admin/GenerateTokenRequest.class
 com/example/controllers/RoomController.class
 com/example/dto/RoomDto.class
-com/example/models/BookingTime.class
 com/example/controllers/BookingController.class
 com/example/exceptions/BookingNotFoundException.class
 com/example/exceptions/IncorrectStartEndTimeException.class

@@ -15,6 +15,6 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
     Optional<Room> findById(Integer id);
     List<Room> findByFloor(Integer floor);
 
-    @Query("SELECT r.Id FROM Room r WHERE r.isOpen = true")
+    @Query("SELECT r.id FROM Room r WHERE r.isOpen = true")
     List<Integer> findAllOpenId();
 }

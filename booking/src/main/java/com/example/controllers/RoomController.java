@@ -28,6 +28,7 @@ public class RoomController {
 
     @GetMapping("/get/{floor}")
     public ResponseEntity<FloorRoomsResponse> getFloorRooms(@PathVariable Integer floor) {
+        log.info("Запрос на получение комнат этажа {}", floor);
         List<RoomDto> rooms = roomService.getAvailableFloorRooms(floor);
         FloorRoomsResponse response = new FloorRoomsResponse(HttpStatus.OK, "OK", rooms);
         return ResponseEntity.ok(response);

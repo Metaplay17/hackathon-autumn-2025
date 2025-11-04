@@ -38,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         
         // Пропускаем публичные пути — не проверяем токен
-        if (isPublicUrl( request.getServletPath())) {
+        if (isPublicUrl(request.getServletPath())) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -71,6 +71,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void writeErrorResponse(HttpServletResponse response, HttpStatus status, String message) throws IOException {
         response.setStatus(status.value());
         response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         DefaultResponse errorResponse = new DefaultResponse(status, message);
         response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
     }
