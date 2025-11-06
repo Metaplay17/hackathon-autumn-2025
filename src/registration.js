@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import ParsingJSON from './parsingJSON';
 
 function Registration() {
     const [formData, setFormData] = useState({username: '', email: '', telegram_tag: '', password: '', secondPassword: ''});
     const [errors, setErrors] = useState({});
+
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -50,17 +55,75 @@ function Registration() {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-            console.log('Форма регистрации отправлена:', formData);
             alert('Регистрация успешна!');
-            // ДОБАВТЬ ОТПРАВКУ РЕГИСТРАЦИИ УЧАСТНИКА
+
+            /*setIsLoading(true);
+
+            try {
+                // Подготовка данных для отправки
+                const registrationData = {
+                    email: formData.email,
+                    password: formData.password,
+                    username: formData.username,
+                    telegramId: parseInt(formData.telegram_tag)
+                };
+
+                console.log('Отправляемые данные:', registrationData);
+
+                // POST запрос через fetch
+                const response = await fetch('', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(registrationData)
+                });
+
+                // Проверяем статус ответа
+                if (!response.ok) {
+                    // Пытаемся получить текст ошибки от сервера
+                    let errorMessage = 'Ошибка регистрации';
+                    try {
+                        const errorData = await response.json();
+                        errorMessage = errorData.message || errorMessage;
+                    } catch (parseError) {
+                        // Если не удалось распарсить JSON, используем статус
+                        errorMessage = `HTTP error! status: ${response.status}`;
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                // Парсим успешный ответ
+                const result = await response.json(); // Парсинг json
+
+                // ДОБАВИТЬ РАБОТУ С ДАННЫМИ
+                
+                console.log('Успешная регистрация:', result);
+                alert('Регистрация успешна!');
+                
+                // Переход на страницу входа
+                navigate('/signin');
+                
+            } catch (error) {
+                console.error('Ошибка регистрации:', error);
+                alert(`Ошибка регистрации: ${error.message}`);
+            } finally {
+                setIsLoading(false);
+            }*/
+
+            ParsingJSON('./sign.json').then(result => {
+                if (result.status == 'OK' || result.status == 'ОК') {
+                    navigate('/signIn');
+                }
+            });
         }
     };
 
     return (
-        <div className="registration-container">
+        <main>
             <form onSubmit={handleSubmit}>
                 <h1>Регистрация</h1>
                 
@@ -107,7 +170,7 @@ function Registration() {
                 <p>Телеграм ID</p>
                 <input 
                     type="text" 
-                    id="telegramId" 
+                    id="telegramID" 
                     placeholder="0000" 
                     value={formData.telegram_tag}
                     onChange={handleChange}
@@ -147,7 +210,8 @@ function Registration() {
 
                 <button type="submit" id="button">Зарегистрироваться</button>
             </form>
-        </div>
+            <Link to="/">Вход</Link>
+        </main>
     );
 }
 

@@ -1,11 +1,16 @@
 // import logo from './logo.svg';
 // import './App.css';
+import ParsingJSON from './parsingJSON';
 
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 function SignIn() {
     const [formData, setFormData] = useState({email: '',password: ''});
     const [errors, setErrors] = useState({email: '',password: '',emptyFields: ''});
+
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -41,11 +46,73 @@ function SignIn() {
             alert('Вход выполнен успешно!');
             // ДОБАВИТЬ ПРОВЕРКУ НА ПРИНАДЛЕЖНОСТЬ К БД
             // ДОБАВИТЬ ПЕРЕХОД НА ДРУГУЮ СТРАНИЦУ
+
+            /*setIsLoading(true);
+
+            try {
+                // Подготовка данных для отправки
+                const registrationData = {
+                    email: formData.email,
+                    password: formData.password
+                };
+
+                console.log('Отправляемые данные:', registrationData);
+
+                // POST запрос через fetch
+                const response = await fetch('', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(registrationData)
+                });
+
+                // Проверяем статус ответа
+                if (!response.ok) {
+                    // Пытаемся получить текст ошибки от сервера
+                    let errorMessage = 'Ошибка регистрации';
+                    try {
+                        const errorData = await response.json();
+                        errorMessage = errorData.message || errorMessage;
+                    } catch (parseError) {
+                        // Если не удалось распарсить JSON, используем статус
+                        errorMessage = `HTTP error! status: ${response.status}`;
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                // Парсим успешный ответ
+                const result = await response.json(); // Парсинг json
+
+                // ДОБАВИТЬ РАБОТУ С ДАННЫМИ
+                
+                console.log('Успешная регистрация:', result);
+                alert('Регистрация успешна!');
+                
+                // Переход на страницу входа
+                navigate('/signin');
+                
+            } catch (error) {
+                console.error('Ошибка регистрации:', error);
+                alert(`Ошибка регистрации: ${error.message}`);
+            } finally {
+                setIsLoading(false);
+            }*/
+
+
+            ParsingJSON('./sign.json').then(result => {
+                if (result.status == 'OK' || result.status == 'ОК') {
+                    localStorage.setItem('email', formData.email);
+                    localStorage.setItem('token', result.token);
+                    navigate('/profile');
+                }
+            });
+
         }
     };
 
     return (
-        <div className="signin-container">
+        <main>
             <form onSubmit={handleSubmit}>
                 <h1>Вход</h1>
 
@@ -88,7 +155,8 @@ function SignIn() {
 
                 <button type="submit">Войти</button>
             </form>
-        </div>
+            <Link to="/registration">Вход</Link>
+        </main>
     );
 }
 
