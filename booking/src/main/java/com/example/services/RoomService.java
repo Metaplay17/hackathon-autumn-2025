@@ -24,7 +24,7 @@ public class RoomService {
         List<Room> rooms = roomRepository.findByFloor(floor);
         List<RoomDto> roomDtos = new ArrayList<RoomDto>();
         for (Room r : rooms) {
-            roomDtos.add(new RoomDto(r.getId(), r.getNumber(), r.getCapability(), r.getFloor(), r.getIsOpen()));
+            roomDtos.add(new RoomDto(r.getId(), r.getNumber(), r.getDescription(), r.getCapability(), r.getFloor(), r.getIsOpen(), r.getPhoto()));
         }
         return roomDtos;
     }

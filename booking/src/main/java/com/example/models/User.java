@@ -20,11 +20,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User {
 
-    public User(String email, String username, String passwordHash, Long telegramId) {
+    public User(String email, String username, String passwordHash) {
         this.email = email;
         this.username= username;
         this.passwordHash = passwordHash;
-        this.telegramId = telegramId;
     }
 
     @Id
@@ -42,9 +41,6 @@ public class User {
 
     @Column(nullable = false)
     private Byte privilegeLevel = 1;
-    
-    @Column(nullable = false, unique = true)
-    private Long telegramId;
 
     @OneToMany(mappedBy = "user")
     private List<Booking> bookings;

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.BookingDto;
+import com.example.dto.requests.CancelBookingRequest;
 import com.example.dto.requests.MakeBookingRequest;
 import com.example.dto.responses.BookingsFloorResponse;
 import com.example.dto.responses.DefaultResponse;
@@ -40,9 +41,9 @@ public class BookingController {
     }
 
     @GetMapping("/get/{floor}")
-    public ResponseEntity<BookingsFloorResponse> getFloorBookings(@PathVariable Integer floor) {
+    public ResponseEntity<BookingsFloorResponse> getFloorBookings(Authentication authentication, @PathVariable Integer floor) {
         log.info("Запрос на получение слотов этажа = {}", floor);
-        List<BookingDto> bookings = bookingService.getBookingsByFloor(floor);
+        List<BookingDto> bookings = bookingService.getBookingsByFloor(floor, (Integer)authentication.getPrincipal());
         return ResponseEntity.ok(new BookingsFloorResponse(HttpStatus.OK, "OK", bookings));
     }
 
@@ -53,6 +54,22 @@ public class BookingController {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             bookingService.makeBooking(user, request);
+            return ResponseEntity.ok(new DefaultResponse(HttpStatus.OK, "OK"));
+        }
+        else {
+            log.error("Запрос от несуществующего пользователя");
+            throw new UserNotFoundException("Пользователь не существует");
+            // Требуется проработка отзыва токена при удалении пользователя из БД
+        }
+    }
+
+    @PostMapping("/cancel")
+    public ResponseEntity<DefaultResponse> cancelBooking(Authentication authentication, @Valid @RequestBody CancelBookingRequest request) {
+        log.info("Запрос на бронирование слота bookingId={} от userId={}", request.getBookingId(), authentication.getPrincipal());
+        Optional<User> userOptional = userService.getUserById((Integer)authentication.getPrincipal());
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            bookingService.cancelBooking(user, request);
             return ResponseEntity.ok(new DefaultResponse(HttpStatus.OK, "OK"));
         }
         else {

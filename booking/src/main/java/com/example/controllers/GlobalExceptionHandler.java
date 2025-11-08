@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.example.dto.responses.DefaultResponse;
+import com.example.exceptions.AccessDeniedException;
 import com.example.exceptions.BookingAlreadyUsedException;
 import com.example.exceptions.BookingNotFoundException;
 import com.example.exceptions.EmailAlreadyUsedException;
@@ -131,6 +132,13 @@ public class GlobalExceptionHandler {
         log.warn(ex.getMessage());
         return ResponseEntity.status(response.getStatus()).body(response);
     }
+
+    @ExceptionHandler(AccessDeniedException.class)
+        public ResponseEntity<DefaultResponse> handleAccessDeniedException(AccessDeniedException ex) {
+            DefaultResponse response = new DefaultResponse(HttpStatus.FORBIDDEN, ex.getMessage());
+            log.warn("Попытка несанкционированного доступа: {}", ex.getMessage());
+            return ResponseEntity.status(response.getStatus()).body(response);
+        }
 
 
 

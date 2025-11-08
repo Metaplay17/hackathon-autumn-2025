@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.dto.BookingDto;
 import com.example.dto.BookingProfileDto;
 import com.example.dto.ProfileDto;
 import com.example.dto.requests.LoginRequest;
@@ -46,10 +47,6 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public Optional<User> getUserByTelegramId(Long telegramId) {
-        return userRepository.findByTelegramId(telegramId);
-    }
-
     public void createUser(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new EmailAlreadyUsedException();
@@ -61,7 +58,7 @@ public class UserService {
             throw new InvalidPasswordException();
         }
         String passwordHash = passwordHasher.hashPassword(request.getPassword());
-        User newUser = new User(request.getEmail(), request.getUsername(), passwordHash, request.getTelegramId());
+        User newUser = new User(request.getEmail(), request.getUsername(), passwordHash);
         userRepository.save(newUser);
     }
 
@@ -107,6 +104,24 @@ public class UserService {
             bookingDtos.add(new BookingProfileDto(
                 b.getId(), 
                 b.getRoom().getFloor().toString() + "-" + b.getRoom().getNumber().toString(), 
+                b.getStart(),
+                b.getDurationMinutes())
+            );
+        }
+        return bookingDtos;
+    }
+
+    public List<BookingDto> getAllUserBookings(Integer userId) {
+        User user = userRepository.getReferenceById(userId);
+        List<Booking> bookings = bookingRepository.findByUser(user);
+        ArrayList<BookingDto> bookingDtos = new ArrayList<BookingDto>();
+        for (Booking b : bookings) {
+            
+            bookingDtos.add(new BookingDto(
+                b.getId(), 
+                true,
+                false,
+                b.getRoom().getId(),
                 b.getStart(),
                 b.getDurationMinutes())
             );

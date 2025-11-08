@@ -1,4 +1,4 @@
-package com.example.dto;
+package com.example.dto.admin;
 
 import java.time.LocalDateTime;
 
@@ -7,8 +7,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class BookingDto {
+public class AdminBookingDto {
     private Integer id;
+    private String username;
     private Boolean isOwner;
     private Boolean isFree;
     private Integer roomId;

@@ -24,6 +24,9 @@ public class Room {
     @Column(name = "number", nullable = false)
     private Integer number;
 
+    @Column(name = "description", nullable = true)
+    private String description;
+
     @Column(name = "capability", nullable = false)
     private Integer capability;
 
@@ -32,6 +35,9 @@ public class Room {
 
     @Column(name = "is_open", nullable = false)
     private Boolean isOpen = true;
+
+    @Column(name = "photo", nullable = true)
+    private String photo;
 
     @OneToMany(mappedBy = "room")
     private List<Booking> bookings;

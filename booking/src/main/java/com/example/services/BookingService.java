@@ -11,49 +11,61 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.dto.BookingDto;
-import com.example.dto.RoomDto;
+import com.example.dto.admin.AdminBookingDto;
 import com.example.dto.admin.UpdateBookingRequest;
+import com.example.dto.requests.CancelBookingRequest;
 import com.example.dto.requests.MakeBookingRequest;
+import com.example.exceptions.AccessDeniedException;
 import com.example.exceptions.BookingAlreadyUsedException;
 import com.example.exceptions.BookingNotFoundException;
 import com.example.exceptions.IncorrectStartEndTimeException;
 import com.example.exceptions.UserNotFoundException;
 import com.example.models.Booking;
+import com.example.models.BookingLog;
 import com.example.models.User;
+import com.example.repositories.BookingLogRepository;
 import com.example.repositories.BookingRepository;
 import com.example.repositories.RoomRepository;
+import com.example.repositories.UserRepository;
 
 @Service
 public class BookingService {
     private final BookingRepository bookingRepository;
     private final RoomRepository roomRepository;
+    private final BookingLogRepository bookingLogRepository;
+    private final UserRepository userRepository;
 
-    public BookingService(BookingRepository bookingRepository, RoomRepository roomRepository) {
+    public BookingService(BookingRepository bookingRepository, RoomRepository roomRepository, BookingLogRepository bookingLogRepository, UserRepository userRepository) {
         this.bookingRepository = bookingRepository;
         this.roomRepository = roomRepository;
+        this.bookingLogRepository = bookingLogRepository;
+        this.userRepository = userRepository;
     }
 
-    public List<BookingDto> getBookingsByFloor(Integer floor) {
+    public List<BookingDto> getBookingsByFloor(Integer floor, Integer userId) {
         List<Booking> bookings = bookingRepository.findByFloorAndActiveDate(floor);
         List<BookingDto> bookingDtos = new ArrayList<BookingDto>();
+        for (Booking b : bookings) {
+            Boolean isOwner = b.getUser() != null && b.getUser().getId().equals(userId);
+            bookingDtos.add(new BookingDto(b.getId(), isOwner, b.getUser() == null, b.getRoom().getId(), b.getStart(), b.getDurationMinutes()));
+        }
+        return bookingDtos;
+    }
+
+    public List<AdminBookingDto> getAdminBookingsByFloor(Integer floor, Integer userId) {
+        List<Booking> bookings = bookingRepository.findByFloorAndActiveDate(floor);
+        List<AdminBookingDto> bookingDtos = new ArrayList<AdminBookingDto>();
         for (Booking b : bookings) {
             String username = null;
             if (b.getUser() != null) {
                 username = b.getUser().getUsername();
             }
-            RoomDto room = new RoomDto(
-                b.getRoom().getId(), 
-                b.getRoom().getNumber(), 
-                b.getRoom().getCapability(),
-                 b.getRoom().getFloor(), 
-                 b.getRoom().getIsOpen()
-            );
-            bookingDtos.add(new BookingDto(b.getId(), username, room, b.getStart(), b.getDurationMinutes()));
+            bookingDtos.add(new AdminBookingDto(b.getId(), username, username != null && b.getUser().getId().equals(userId), b.getUser() == null, b.getRoom().getId(), b.getStart(), b.getDurationMinutes()));
         }
         return bookingDtos;
     }
 
-    public void updateBooking(UpdateBookingRequest request, Optional<User> newUser) {
+    public void updateBooking(Integer actionerId, UpdateBookingRequest request, Optional<User> newUser) {
         if (!newUser.isPresent()) {
             throw new UserNotFoundException("Пользователь с таким username не существует");
         }
@@ -61,8 +73,15 @@ public class BookingService {
         Optional<Booking> bookingOptional = bookingRepository.findById(request.getBookingId());
         if (bookingOptional.isPresent()) {
             Booking booking = bookingOptional.get();
+
+            User oldUser = booking.getUser();
+            User actioner = userRepository.getReferenceById(actionerId);
+
             booking.setUser(user);
-            bookingRepository.saveAndFlush(booking);
+            bookingRepository.save(booking);
+            BookingLog log = new BookingLog(booking, "UPDATE", actioner, oldUser, user);
+            bookingLogRepository.save(log);
+            
         }
         else {
             throw new BookingNotFoundException("Бронь с id = " + request.getBookingId() + " не найдена");
@@ -76,8 +95,30 @@ public class BookingService {
             if (booking.getUser() != null) {
                 throw new BookingAlreadyUsedException("Бронь уже занята");
             }
+            if (booking.getStart().plusMinutes(booking.getDurationMinutes()).isBefore(LocalDateTime.now())) {
+                throw new AccessDeniedException("Бронь уже не актуальна");
+            }
             booking.setUser(user);
-            bookingRepository.saveAndFlush(booking);
+            bookingRepository.save(booking);
+            BookingLog log = new BookingLog(booking, "BOOK", user, null, user);
+            bookingLogRepository.save(log);
+        }
+        else {
+            throw new BookingNotFoundException("Бронь с id = " + request.getBookingId() + " не найдена");
+        }
+    }
+
+    public void cancelBooking(User user, CancelBookingRequest request) {
+        Optional<Booking> bookingOptional = bookingRepository.findById(request.getBookingId());
+        if (bookingOptional.isPresent()) {
+            Booking booking = bookingOptional.get();
+            if (booking.getUser() != user) {
+                throw new AccessDeniedException("Бронь не является вашей");
+            }
+            booking.setUser(null);
+            bookingRepository.save(booking);
+            BookingLog log = new BookingLog(booking, "CANCEL", user, user, null);
+            bookingLogRepository.save(log);
         }
         else {
             throw new BookingNotFoundException("Бронь с id = " + request.getBookingId() + " не найдена");

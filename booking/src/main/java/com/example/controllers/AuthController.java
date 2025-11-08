@@ -45,6 +45,6 @@ public class AuthController {
         User user = userService.authUser(request);
         String token = jwtService.generateToken(user.getId());
         log.info("Пользователь {} авторизовался", request.getEmail());
-        return ResponseEntity.ok(new LoginResponse(HttpStatus.OK, "OK", token, user.getPrivilegeLevel()));
+        return ResponseEntity.ok(new LoginResponse(HttpStatus.OK, "OK", token, user.getPrivilegeLevel(), user.getUsername()));
     }
 }

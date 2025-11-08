@@ -4,17 +4,18 @@ CREATE TABLE users (
     username VARCHAR(30) NOT NULL UNIQUE,
     email VARCHAR(50) NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
-    privilege_level SMALLINT NOT NULL DEFAULT 1,
-    telegram_id BIGINT NOT NULL UNIQUE -- Если он обязателен при регистрации
+    privilege_level SMALLINT NOT NULL DEFAULT 1
 );
 
 -- Создание таблицы rooms
 CREATE TABLE rooms (
     id SERIAL PRIMARY KEY,
     number INTEGER NOT NULL,
+    descritpion TEXT,
     capability INTEGER NOT NULL,
     floor INTEGER NOT NULL,
-    is_open BOOLEAN NOT NULL DEFAULT TRUE
+    is_open BOOLEAN NOT NULL DEFAULT TRUE,
+    photo TEXT
 );
 
 -- Создание таблицы bookings
@@ -27,4 +28,18 @@ CREATE TABLE bookings (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE CASCADE,
     UNIQUE (room_id, start)
+);
+
+CREATE TABLE bookings_logs (
+    id SERIAL PRIMARY KEY,
+    booking_id INTEGER NOT NULL,
+    operation_type TEXT NOT NULL,
+    actioner_id INTEGER NOT NULL,
+    previous_user_id INTEGER,
+    new_user_id INTEGER,
+    changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (actioner_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (previous_user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (new_user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE,
 );

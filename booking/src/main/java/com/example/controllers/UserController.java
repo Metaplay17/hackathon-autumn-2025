@@ -1,6 +1,8 @@
 package com.example.controllers;
 
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dto.BookingDto;
 import com.example.dto.ProfileDto;
+import com.example.dto.responses.BookingHistoryResponse;
 import com.example.dto.responses.ProfileResponse;
 import com.example.services.UserService;
 
@@ -32,5 +36,13 @@ public class UserController {
         Integer userId = (Integer)authentication.getPrincipal();
         ProfileDto profileDto = userService.getUserProfile(userId);
         return ResponseEntity.ok(new ProfileResponse(HttpStatus.OK, "OK", profileDto.getUsername(), profileDto.getBookings()));
+    }
+
+    @GetMapping("/booking-history")
+    public ResponseEntity<BookingHistoryResponse> getBookingHistory(Authentication authentication) {
+        log.info("Запрос на получение истории бронирований от userId={}", authentication.getPrincipal());
+        Integer userId = (Integer)authentication.getPrincipal();
+        List<BookingDto> bookingDtos = userService.getAllUserBookings(userId);
+        return ResponseEntity.ok(new BookingHistoryResponse(HttpStatus.OK, "OK", bookingDtos));
     }
 }
