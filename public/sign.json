@@ -1,5 +1,6 @@
 {
  "status": "OK",
  "message": "OK",
- "token": "aaaaaaaaaa"
+ "token": "aaaaaaaaaa",
+ "privilegeLevel": 5
 }

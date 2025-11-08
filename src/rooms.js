@@ -3,6 +3,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Rooms() {
+
+    const privelege = localStorage.getItem('privelege');
+
     const [isLoading, setIsLoading] = useState(false);
     const [meetingsHtml, setMeetingsHtml] = useState('');
     const [meetingsHtmlTwo, setMeetingsHtmlTwo] = useState('');
@@ -43,8 +46,7 @@ function Rooms() {
                     console.log("Забронированно: № " + result.bookings[i].id);
                     booked = true;
                     
-                    // Здесь должен быть запрос на сервер для реального бронирования
-                    // await fetch('/api/book', { method: 'POST', body: JSON.stringify({...}) });
+                    // ОТПРАВКА НА СЕРВЕР
                     
                     alert("Бронирование успешно!");
                     break;
@@ -122,7 +124,7 @@ function Rooms() {
                         if (result.rooms[i].open) {
                             div += `<button id="butingRoom" class="room${countRoom + 1}" data-room-id="${result.rooms[i].id}">${result.rooms[i].number}</button>`;
                         } else {
-                            div += `<button disabled class="blockRoom">${result.rooms[i].number}</button>`;
+                            div += `<button disabled class="room${countRoom + 1}">${result.rooms[i].number}</button>`;
                         }
 
                         if (one == 0) {
@@ -163,7 +165,7 @@ function Rooms() {
                             divTwo += `<p>Вместимость: ${capabilityRoom}</p>`;
                             divTwo += `<div id="date"><p>Дата</p> <input type="date" /> </div>`;
         
-                            divTwo += `<div><p>Время</p><div id="times">`;
+                            divTwo += `<div class="rowCenter"><p>Время</p><div id="times">`;
         
                             for (let j = 0; j < result.bookings.length; j++) {
                                 if (idRoom == result.bookings[j].roomId) {
@@ -181,6 +183,52 @@ function Rooms() {
                         }
                     }
                 }
+            }
+            if (privelege == 5) { // Если Администратор
+                console.log(privelege);
+                divTwo += `<div class="bookButtons">
+                        <button id="userBook">Забронировать</button>
+                        <a href="#">Забронировать в Телеграм</a>
+
+                        <button id="userDelBook">Отменить бронь</button>
+                        <a href="#">Отменить бронь в Телеграм</a>
+
+                        <button id="adminChangeBook">Редактировать бронь</button>
+                        <button id="adminChangeRoom">Редактировать комнату</button>
+                    </div>
+
+                    <div class="changeBookPopup">
+                        <div>
+                            <p>Имя пользователя</p>
+                            <input type="text" placeholder="Username" />
+                            <p><input type="checkbox" id="blockTime" /><span>Заблокировать время</span></p>
+                        </div>
+                        <div>
+                            <button id="cancelChangeBook">Отмена</button>
+                            <button id="saveChangeBook">Сохранить</button>
+                        </div>
+                    </div>
+
+                    <div class="changeRoomPopup">
+                        <div>
+                            <p>Вместимость</p>
+                            <input type="number" min="0" />
+                            <p><input type="checkbox" id="blockRoom" /><span>Заблокировать комнату</span></p>
+                        </div>
+                        <div>
+                            <button id="cancelChangeRoom">Отмена</button>
+                            <button id="saveChangeRoom">Сохранить</button>
+                        </div>
+                    </div>`;
+            }
+            else {
+                divTwo += `<div class="bookButtons">
+                        <button id="userBook">Забронировать</button>
+                        <a href="#">Забронировать в Телеграм</a>
+
+                        <button id="userDelBook">Отменить бронь</button>
+                        <a href="#">Отменить бронь в Телеграм</a>
+                        </div>`;
             }
             setMeetingsHtmlTwo(divTwo);    
         }).catch(error => {
@@ -219,14 +267,24 @@ function Rooms() {
     return (
         <>
             <header>
-                <img src="/icon.png" alt="icon" />
-                <img src="/Profile.png" alt="profile" />
+                <div class="rightHeader">
+                    <img src="/icon.png" alt="icon" />
+                </div>
+                <div class="menu">
+                    <Link to="/rooms">Бронирование</Link>
+                    <Link to="/history">История</Link>
+                    <Link to="/profile">Профиль</Link>
+                </div>
+                <div class="rightHeader">
+                    <img src="/Profile.png" alt="profile" />
+                    <button id="exit">Выход</button>
+                </div>
             </header>
-            <main>
-                <div className="left" ref={rightRef}>
-                    <div>
+            <main class="row">
+                <div class="leftInd" ref={rightRef}>
+                    <div class="row">
                         <h3>Этаж</h3>
-                        <select value={floorRoom} onChange={handleFloorChange}>
+                        <select id="selectFloor" value={floorRoom} onChange={handleFloorChange}>
                             <option value={1}>1</option>
                             <option value={2}>2</option>
                             <option value={3}>3</option>
@@ -235,43 +293,8 @@ function Rooms() {
                     <div dangerouslySetInnerHTML={{ __html: meetingsHtml }} />
                 </div>
 
-                <div class="right" ref={leftRef}>
+                <div class="rightInd" ref={leftRef}>
                     <div dangerouslySetInnerHTML={{ __html: meetingsHtmlTwo }} />
-
-                    <div class="bookButtons">
-                        <button id="userBook">Забронировать</button>
-                        <a href="#">Забронировать в Телеграм</a>
-
-                        <button class="closed" id="userDelBook">Отменить бронь</button>
-                        <a class="closed" href="#">Отменить бронь в Телеграм</a>
-
-                        <button class="closed" id="adminChangeBook">Редактировать бронь</button>
-                        <button class="closed" id="adminChangeRoom">Редактировать комнату</button>
-                    </div>
-
-                    <div class="changeBookPopup closed">
-                        <div>
-                            <p>Имя пользователя</p>
-                            <input type="text" placeholder="Username" />
-                            <p><input type="checkbox" id="blockTime" /><span>Заблокировать время</span></p>
-                        </div>
-                        <div>
-                            <button id="cancelChangeBook">Отмена</button>
-                            <button id="saveChangeBook">Сохранить</button>
-                        </div>
-                    </div>
-
-                    <div class="changeRoomPopup closed">
-                        <div>
-                            <p>Вместимость</p>
-                            <input type="number" min="0" />
-                            <p><input type="checkbox" id="blockRoom" /><span>Заблокировать комнату</span></p>
-                        </div>
-                        <div>
-                            <button id="cancelChangeRoom">Отмена</button>
-                            <button id="saveChangeRoom">Сохранить</button>
-                        </div>
-                    </div>
                 </div>
             </main>
             <footer>

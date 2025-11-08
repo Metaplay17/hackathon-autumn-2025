@@ -104,6 +104,7 @@ function SignIn() {
                 if (result.status == 'OK' || result.status == 'ОК') {
                     localStorage.setItem('email', formData.email);
                     localStorage.setItem('token', result.token);
+                    localStorage.setItem('privelege', result.privilegeLevel);
                     navigate('/profile');
                 }
             });
@@ -112,7 +113,7 @@ function SignIn() {
     };
 
     return (
-        <main>
+        <main class="center">
             <form onSubmit={handleSubmit}>
                 <h1>Вход</h1>
 
@@ -153,9 +154,9 @@ function SignIn() {
                     required
                 />
 
-                <button type="submit">Войти</button>
+                <button class="blueBtn" id="button" type="submit">Войти</button>
+                <a href=""><Link to="/registration">Регистрация</Link></a>
             </form>
-            <Link to="/registration">Регистрация</Link>
         </main>
     );
 }

@@ -123,7 +123,7 @@ function Registration() {
     };
 
     return (
-        <main>
+        <main class="center">
             <form onSubmit={handleSubmit}>
                 <h1>Регистрация</h1>
                 
@@ -209,8 +209,8 @@ function Registration() {
                 />
 
                 <button type="submit" id="button">Зарегистрироваться</button>
+                <a href=""><Link to="/">Вход</Link></a>
             </form>
-            <Link to="/">Вход</Link>
         </main>
     );
 }

@@ -81,29 +81,43 @@ function Profile() {
 
 
     return (
-        <div>
-            <header>
+    <>
+        <header>
+            <div class="rightHeader">
                 <img src="/icon.png" alt="icon" />
+            </div>
+            <div class="menu">
+                <Link to="/rooms">Бронирование</Link>
+                <Link to="/history">История</Link>
+                <Link to="/profile">Профиль</Link>
+            </div>
+            <div class="rightHeader">
                 <img src="/Profile.png" alt="profile" />
-            </header>
-            <main>
-                <div className="left">
-                    <img src="/Profile.png" alt="icon" />
-                    <h3>Забронировать переговорную комнату</h3>
-                    <button id="btnSite">На сайте</button>
-                    <button id="btnTg">В Телеграм</button>
+                <button id="exit">Выход</button>
+            </div>
+        </header>
+        <main class="row_pr">
+            <div class="left">
+                <img src="/Profile.png" alt="icon" />
+                <h3>Забронировать переговорную комнату</h3>
+                <button class="darkBlueBtn" id="btnSite">На сайте</button>
+                <button class="blueBtn" id="btnTg">В Телеграм</button>
+            </div>
+            <div class="right">
+                <h1 id="username">Username</h1>
+                <h2>Будущие встречи:</h2>
+                <div class="meetings" id="meetings">
+                    <p>12 декабря 12:20 к. 120</p>
+                    <p>12 декабря 12:20 к. 120</p>
                 </div>
-                <div className="right">
-                    <h2 id="username">{email}</h2>
-                    <h3>Будущие встречи:</h3>
-                    <div dangerouslySetInnerHTML={{ __html: meetingsHtml }} />
-                </div>
-            </main>
-            <footer>
-                <p>@poluYangTeam, 2025</p>
-            </footer>
-        </div>
-    );
+            </div>
+            <div class="profileBackground"></div>
+        </main>
+        <footer>
+            <p>@poluYangTeam, 2025</p>
+        </footer>
+    </>
+);
 }
 
 export default Profile;

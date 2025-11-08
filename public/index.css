@@ -52,7 +52,7 @@ main{
     height: 100vh;
 }
 .background {
-    background: url(room10.jpg);
+    background: url(room.jpg);
     background-repeat: repeat;
     background-size: 250px;
 }
