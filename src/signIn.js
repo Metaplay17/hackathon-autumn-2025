@@ -117,13 +117,13 @@ function SignIn() {
                 <h1>Вход</h1>
 
                 {errors.emptyFields && (
-                    <div className="warning" id="emptyFields">
+                    <div class="warning" id="emptyFields">
                         {errors.emptyFields}
                     </div>
                 )}
 
                 {errors.email && (
-                    <div className="warning" id="wrongEmail">
+                    <div class="warning" id="wrongEmail">
                         {errors.email}
                     </div>
                 )}
@@ -138,7 +138,7 @@ function SignIn() {
                 />
 
                 {errors.password && (
-                    <div className="warning" id="wrongPassword">
+                    <div class="warning" id="wrongPassword">
                         {errors.password}
                     </div>
                 )}
@@ -155,7 +155,7 @@ function SignIn() {
 
                 <button type="submit">Войти</button>
             </form>
-            <Link to="/registration">Вход</Link>
+            <Link to="/registration">Регистрация</Link>
         </main>
     );
 }

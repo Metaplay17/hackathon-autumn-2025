@@ -128,13 +128,13 @@ function Registration() {
                 <h1>Регистрация</h1>
                 
                 {Object.keys(errors).length > 0 && (
-                    <div className="warning" id="emptyFields">
+                    <div class="warning" id="emptyFields">
                         Пожалуйста, заполните все поля правильно
                     </div>
                 )}
 
                 {errors.username && (
-                    <div className="warning">{errors.username}</div>
+                    <div class="warning">{errors.username}</div>
                 )}
 
                 <p>Имя пользователя</p>
@@ -148,7 +148,7 @@ function Registration() {
                 />
 
                 {errors.email && (
-                    <div className="warning" id="wrongEmail">
+                    <div class="warning" id="wrongEmail">
                         {errors.email}
                     </div>
                 )}
@@ -164,7 +164,7 @@ function Registration() {
                 />
 
                 {errors.telegram_tag && (
-                    <div className="warning">{errors.telegram_tag}</div>
+                    <div class="warning">{errors.telegram_tag}</div>
                 )}
 
                 <p>Телеграм ID</p>
@@ -178,12 +178,12 @@ function Registration() {
                 />
 
                 {errors.password && (
-                    <div className="warning" id="wrongPassword">
+                    <div class="warning" id="wrongPassword">
                         {errors.password}
                     </div>
                 )}
                 {errors.secondPassword && (
-                    <div className="warning" id="doesntMatchPassword">
+                    <div class="warning" id="doesntMatchPassword">
                         {errors.secondPassword}
                     </div>
                 )}
