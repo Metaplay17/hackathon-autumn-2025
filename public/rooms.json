@@ -19,6 +19,24 @@
             "floor": 1,
             "photo": null,
             "open": false
+        },
+        {
+            "id": 4,
+            "number": 120,
+            "description": null,
+            "capability": 10,
+            "floor": 1,
+            "photo": null,
+            "open": true
+        },
+        {
+            "id": 5,
+            "number": 150,
+            "description": null,
+            "capability": 10,
+            "floor": 1,
+            "photo": null,
+            "open": true
         }
     ]
 }
