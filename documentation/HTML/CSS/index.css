@@ -394,7 +394,17 @@ a:hover{
 
 
 @media screen and (max-width: 768px){
-    
+    main{
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .row{
+        width: 100%;
+    }
+    .roomImg{
+        width: 330px;
+        margin: 10px 0;
+    }
 }
 
 
