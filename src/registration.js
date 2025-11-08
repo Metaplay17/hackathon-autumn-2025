@@ -167,16 +167,6 @@ function Registration() {
                     <div class="warning">{errors.telegram_tag}</div>
                 )}
 
-                <p>Телеграм ID</p>
-                <input 
-                    type="text" 
-                    id="telegramID" 
-                    placeholder="0000" 
-                    value={formData.telegram_tag}
-                    onChange={handleChange}
-                    required 
-                />
-
                 {errors.password && (
                     <div class="warning" id="wrongPassword">
                         {errors.password}
@@ -208,7 +198,7 @@ function Registration() {
                     required 
                 />
 
-                <button type="submit" id="button">Зарегистрироваться</button>
+                <button type="submit" id="button" className="blueBtn">Зарегистрироваться</button>
                 <a href=""><Link to="/">Вход</Link></a>
             </form>
         </main>
