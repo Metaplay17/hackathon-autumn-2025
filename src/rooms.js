@@ -1,6 +1,101 @@
-
+import ParsingJSON from './parsingJSON';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Rooms() {
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [meetingsHtml, setMeetingsHtml] = useState('');
+    const [meetingsHtmlTwo, setMeetingsHtmlTwo] = useState('');
+
+    const [idRoom, setIdRoom] = useState(0);
+    const navigate = useNavigate();
+
+     /*setIsLoading(true);
+     
+     try {
+         const response = await fetch('', {
+             method: 'POST',
+             headers: {'Content-Type': 'application/json',}
+         });
+
+         // Проверяем статус ответа
+         if (!response.ok) {
+             // Пытаемся получить текст ошибки от сервера
+             let errorMessage = 'Ошибка регистрации';
+             try {
+                 const errorData = await response.json();
+                 errorMessage = errorData.message || errorMessage;
+             } catch (parseError) {
+                 // Если не удалось распарсить JSON, используем статус
+                 errorMessage = `HTTP error! status: ${response.status}`;
+             }
+             throw new Error(errorMessage);
+         }
+
+         // Парсим успешный ответ
+         const result = await response.json(); // Парсинг json
+
+         // ДОБАВИТЬ РАБОТУ С ДАННЫМИ
+         
+         console.log('Успешная регистрация:', result);
+         alert('Регистрация успешна!');
+         
+         // Переход на страницу входа
+         navigate('/signin');
+         
+     } catch (error) {
+         console.error('Ошибка регистрации:', error);
+         alert(`Ошибка регистрации: ${error.message}`);
+     } finally {
+         setIsLoading(false);
+     }*/
+
+    // Все комнаты
+    useEffect(() => {
+        let divTwo = ``;
+
+        ParsingJSON('./bronion.json').then(result => {
+            if (result.status == 'OK' || result.status == 'ОК') {
+                for (let i = 0; i < result.bookings.length; i++) {
+                    
+                }
+            }
+            
+        }).catch(error => {
+            
+        });
+    }, []);
+
+    // Выбор первого бронирования
+    useEffect(() => {
+        let div = `<div id="roomsSchema">`;
+
+        ParsingJSON('./rooms.json').then(result => {
+            if (result.status == 'OK' || result.status == 'ОК') {
+                for (let i = 0; i < result.rooms.length; i++) {
+                    if (result.rooms[i].open) {
+                        div += `<button class="room">${result.rooms[i].number}</button>`; // Переменовать в activRoom когда активированно
+                    }
+                    else {
+                        div += `<button disabled class="blockRoom">${result.rooms[i].number}</button>`;
+                    }
+
+                    if (i == 0) {
+                        setIdRoom(result.rooms[i].id)
+                    }
+                }
+            }
+            div += `</div>`;
+            setMeetingsHtml(div);
+        }).catch(error => {
+            console.error('Ошибка загрузки данных:', error);
+            setMeetingsHtml('<div id="meetings">Ошибка загрузки данных</div>');
+        });
+    }, []);
+
+
     return (
         <>
             <header>
@@ -17,10 +112,9 @@ function Rooms() {
                             <option>3</option>
                         </select>
                     </div>
-                    <div id="roomsSchema">
-                        
-                    </div>
+                    <div dangerouslySetInnerHTML={{ __html: meetingsHtml }} />
                 </div>
+
                 <div className="right">
                     <h2>Кабинет</h2>
                     <p>Вместимость: </p>

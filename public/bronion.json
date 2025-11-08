@@ -1,0 +1,20 @@
+{
+    "status": "OK",
+    "message": "OK",
+    "bookings": [
+        {
+            "id": 43,
+            "username": "Metaplay",
+            "roomId": 3,
+            "start": "2025-11-08T16:30:00",
+            "durationMinutes": 90
+        },
+        {
+            "id": 65,
+            "username": null,
+            "roomId": 3,
+            "start": "2025-11-08T12:00:00",
+            "durationMinutes": 90
+        }
+    ]
+}
