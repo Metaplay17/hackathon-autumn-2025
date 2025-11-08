@@ -7,30 +7,26 @@
     <link rel="icon" href="img/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="CSS/index.css" type="text/css">
 </head>
-<body>
-    <main>
-        <form>
-            <h1>Регистрация</h1>
-            <a class="warning closed" id="emptyFields"></a>
-            <p>Имя пользователя</p>
-            <input type="text" id="username" placeholder="Businessman3000" required>
-            <p>Почта</p>
-            <input type="text" id="email" placeholder="abc@gmail.com" required>
-            <a class="warning closed" id="wrongEmail"></a>
-            <p>Телеграм ID</p>
-            <input type="text" id="telegramID" placeholder="12345" required>
-            <a class="warning closed" id="wrongID"></a>
-            <a href="https://www.ixbt.com/live/sw/kak-uznat-svoy-id-v-telegram-i-ne-tolko-polzovatelya-chata-bota-gruppy-ili-kanala.html" target="_blank">Где его найти?</a>
-            <p>Пароль</p>
-            <input type="password" id="password" placeholder="Пароль" required>
-            <a class="warning closed" id="wrongPassword"></a>
-            <p>Поторите пароль</p>
-            <input type="password" id="secondPassword" placeholder="Повторите пароль" required>
-            <a class="warning closed" id="doesntMatchPassword"></a>
-            <button id="button">Зарегистрироаться</button>
-        </form>
-        <a href="signIn.html">Уже зарегистрирован</a>
-    </main>
+<body class="background">
+        <main class="center">
+            <form>
+                <h1>Регистрация</h1>
+                <a class="warning closed" id="emptyFields"></a>
+                <p>Имя пользователя</p>
+                <input type="text" id="username" placeholder="Businessman3000" required>
+                <p>Почта</p>
+                <input type="text" id="email" placeholder="abc@gmail.com" required>
+                <a class="warning closed" id="wrongEmail"></a>
+                <p>Пароль</p>
+                <input type="password" id="password" placeholder="Пароль" required>
+                <a class="warning closed" id="wrongPassword"></a>
+                <p>Поторите пароль</p>
+                <input type="password" id="secondPassword" placeholder="Повторите пароль" required>
+                <a class="warning closed" id="doesntMatchPassword"></a>
+                <button class="blueBtn" id="button">Зарегистрироваться</button>
+                <a href="signIn.html">Уже зарегистрирован</a>
+            </form>
+        </main>
 </body>
 <script src="react/App.js"></script>
 </html>

@@ -3,85 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Бронирование переговорных комнат</title>
+    <title>Бронирование комнат</title>
     <link rel="icon" href="img/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="CSS/index.css" type="text/css">
 </head>
 <body>
     <header>
-        <img src="img/icon.png" alt="icon">
-        <img src="img/Profile.png" alt="profile">
+        <div class="rightHeader">
+            <img src="img/icon.png" alt="icon">
+        </div>
+        <div class="menu">
+            <a href="index.html">Бронирование</a>
+            <a href="history.html">История</a>
+            <a href="profile.html">Профиль</a>
+        </div>
+        <div class="rightHeader">
+            <img src="img/Profile.png" alt="profile">
+            <button id="exit">Выход</button>
+        </div>
     </header>
-    <main>
-        <div class="left">
-            <div>
+    <main class="row">
+        <div class="leftInd">
+            <div class="row">
                 <h3>Этаж</h3>
-                <select>
+                <select id="selectFloor">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
                 </select>
             </div>
             <div id="roomsSchema">
-                
+                <button disabled class="room1 blockRoom" >1</button>
+                <button class="room2">2</button>
+                <button class="room3">3</button>
+                <button class="room4">4</button>
+                <button disabled class="room5 blockRoom">5</button>
+                <button class="room6">6</button>
+                <button class="room7">7</button>
+                <button class="room8">8</button>
+                <button class="room9 activeRoom">9</button>
+                <button class="room10">10</button>
+                <button disabled class="room11 blockRoom">11</button>
+                <button class="room12">12</button>
+                <button class="room13">13</button>
             </div>
         </div>
-        <div class="right">
-            <h2>Кабинет</h2>
-            <p>Вместимость: </p>
-            <div id="date">
-                <p>Дата</p>
-                <input type="date">
-            </div>
-
-            <div>
-                <p>Время</p>
-                <div id="times">
-                    <button class="noBooked noChosen">9:00</button>
-                    <button class="booked chosen">10:40</button>
+        <div class="rightInd">
+            <div class="rightInd">
+                <h2>Кабинет</h2>
+                <p>Вместимость: </p>
+                <div class="rowCenter" id="date">
+                    <p>Дата</p>
+                    <input type="date">
+                </div>
+                <div>
+                    <p>Время</p>
+                    <div id="times">
+                        <button class="noBooked chosen">9:00</button>
+                        <button class="booked">10:40</button>
+                        <button class="noBooked">9:00</button>
+                        <button class="booked">10:40</button>
+                        <button class="noBooked">9:00</button>
+                        <button class="booked">10:40</button>
+                    </div>
                 </div>
             </div>
-
             <div class="bookButtons">
 
-                <button id="userBook">Забронировать</button>
-                <a href="#">Забронировать в Телеграм</a>
+                <button class="greenBtn" id="userBook">Забронировать</button>
+                <a id="userBookTg" href="#">Забронировать в Телеграм</a>
 
-                <button class="closed" id="userDelBook">Отменить бронь</button>
-                <a class="closed" href="#">Отменить бронь в Телеграм</a>
+                <button class="closed redBtn" id="userDelBook">Отменить бронь</button>
+                <a id="userDelBookTg" class="closed" href="#">Отменить бронь в Телеграм</a>
 
-                <button class="closed" id="adminChangeBook">Редактировать бронь</button>
-                <button class="closed" id="adminChangeRoom">Редактировать комнату</button>
+                <button class="closed greenBtn" id="adminChangeBook">Редактировать бронь</button>
+                <button class="closed greenBtn" id="adminChangeRoom">Редактировать комнату</button>
             </div>
+        </div>
 
-            <div class="changeBookPopup closed">
-                <div>
+        <img class="roomImg" id="roomImg" src="img/room.jpg" alt="roomProfile">
+
+        <section class="closed" id="changeBookPopup">
+            <div class="changePopup">
+                <div class="rowIn">
                     <p>Имя пользователя</p>
                     <input type="text" placeholder="Username">
                     <p><input type="checkbox" id="blockTime"><span>Заблокировать время</span></p>
-
                 </div>
-                <div>
-                    <button id="cancelChangeBook">Отмена</button>
-                    <button id="saveChangeBook">Сохранить</button>
+                <div class="rowBtn">
+                    <button class="blueBtn" id="cancelChangeBook">Отмена</button>
+                    <button class="greenBtn" id="saveChangeBook">Сохранить</button>
                 </div>
             </div>
-
-            <div class="changeRoomPopup closed">
-                <div>
+        </section>
+        <section class="closed" id="changeRoomPopup">
+            <div class="changePopup">
+                <div class="rowIn">
                     <p>Вместимость</p>
                     <input type="number" min="0">
                     <p><input type="checkbox" id="blockRoom"><span>Заблокировать комнату</span></p>
 
                 </div>
-                <div>
-                    <button id="cancelChangeRoom">Отмена</button>
-                    <button id="saveChangeRoom">Сохранить</button>
+                <div class="rowBtn">
+                    <button class="blueBtn" id="cancelChangeRoom">Отмена</button>
+                    <button class="greenBtn" id="saveChangeRoom">Сохранить</button>
                 </div>
             </div>
-
-        </div>
-
+        </section>
     </main>
     <footer>
         <p>@poluYangTeam, 2025</p>
