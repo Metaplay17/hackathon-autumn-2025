@@ -201,7 +201,6 @@ input:focus, input:active {
 }
 .right{
     gap: 10px;
-    height: 100vh;
 }
 .rightInd{
     justify-content: space-between;
@@ -387,5 +386,5 @@ a:hover{
     height: auto;
     background: url(circles.jpg);
     background-repeat: repeat-y;
-    background-size: 300px;
+    background-size: 305px;
 }
