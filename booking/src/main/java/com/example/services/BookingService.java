@@ -52,6 +52,16 @@ public class BookingService {
         return bookingDtos;
     }
 
+    public List<BookingDto> getAllBookings(Integer userId) {
+        List<Booking> bookings = bookingRepository.findByActiveDate();
+        List<BookingDto> bookingDtos = new ArrayList<BookingDto>();
+        for (Booking b : bookings) {
+            Boolean isOwner = b.getUser() != null && b.getUser().getId().equals(userId);
+            bookingDtos.add(new BookingDto(b.getId(), isOwner, b.getUser() == null, b.getRoom().getId(), b.getStart(), b.getDurationMinutes()));
+        }
+        return bookingDtos;
+    }
+
     public List<AdminBookingDto> getAdminBookingsByFloor(Integer floor, Integer userId) {
         List<Booking> bookings = bookingRepository.findByFloorAndActiveDate(floor);
         List<AdminBookingDto> bookingDtos = new ArrayList<AdminBookingDto>();

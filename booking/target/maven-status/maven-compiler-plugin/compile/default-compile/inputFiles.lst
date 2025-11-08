@@ -20,6 +20,8 @@
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/requests/LoginRequest.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/requests/MakeBookingRequest.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/requests/RegisterRequest.java
+/home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/responses/AllBookingsResponse.java
+/home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/responses/AllRoomsResponse.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/responses/BookingHistoryResponse.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/responses/BookingsFloorResponse.java
 /home/kirol/java-projects/hackathon-autumn-2025/booking/src/main/java/com/example/dto/responses/DefaultResponse.java

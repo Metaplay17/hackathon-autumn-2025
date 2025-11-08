@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.dto.BookingDto;
 import com.example.dto.requests.CancelBookingRequest;
 import com.example.dto.requests.MakeBookingRequest;
+import com.example.dto.responses.AllBookingsResponse;
 import com.example.dto.responses.BookingsFloorResponse;
 import com.example.dto.responses.DefaultResponse;
 import com.example.exceptions.UserNotFoundException;
@@ -45,6 +46,13 @@ public class BookingController {
         log.info("Запрос на получение слотов этажа = {}", floor);
         List<BookingDto> bookings = bookingService.getBookingsByFloor(floor, (Integer)authentication.getPrincipal());
         return ResponseEntity.ok(new BookingsFloorResponse(HttpStatus.OK, "OK", bookings));
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<AllBookingsResponse> getAllBookings(Authentication authentication) {
+        log.info("Запрос на получение всех слотов");
+        List<BookingDto> bookings = bookingService.getAllBookings((Integer)authentication.getPrincipal());
+        return ResponseEntity.ok(new AllBookingsResponse(HttpStatus.OK, "OK", bookings));
     }
 
     @PostMapping("/make")

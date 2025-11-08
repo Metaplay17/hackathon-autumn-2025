@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.RoomDto;
+import com.example.dto.responses.AllRoomsResponse;
 import com.example.dto.responses.FloorRoomsResponse;
 import com.example.services.RoomService;
 
@@ -31,6 +32,14 @@ public class RoomController {
         log.info("Запрос на получение комнат этажа {}", floor);
         List<RoomDto> rooms = roomService.getAvailableFloorRooms(floor);
         FloorRoomsResponse response = new FloorRoomsResponse(HttpStatus.OK, "OK", rooms);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<AllRoomsResponse> getAllRooms() {
+        log.info("Запрос на получение всех комнат");
+        List<RoomDto> rooms = roomService.getAllRooms();
+        AllRoomsResponse response = new AllRoomsResponse(HttpStatus.OK, "OK", rooms);
         return ResponseEntity.ok(response);
     }
 }

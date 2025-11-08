@@ -29,6 +29,15 @@ public class RoomService {
         return roomDtos;
     }
 
+    public List<RoomDto> getAllRooms() {
+        List<Room> rooms = roomRepository.findAll();
+        List<RoomDto> roomDtos = new ArrayList<RoomDto>();
+        for (Room r : rooms) {
+            roomDtos.add(new RoomDto(r.getId(), r.getNumber(), r.getDescription(), r.getCapability(), r.getFloor(), r.getIsOpen(), r.getPhoto()));
+        }
+        return roomDtos;
+    }
+
     public void updateRoom(UpdateRoomRequest request) {
         Optional<Room> roomOptional = roomRepository.findById(request.getRoomId());
         if (roomOptional.isPresent()) {

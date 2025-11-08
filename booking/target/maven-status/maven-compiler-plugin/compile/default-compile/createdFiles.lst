@@ -34,6 +34,7 @@ com/example/controllers/RoomController.class
 com/example/dto/RoomDto.class
 com/example/dto/responses/BookingHistoryResponse.class
 com/example/models/BookingLog.class
+com/example/dto/responses/AllRoomsResponse.class
 com/example/controllers/BookingController.class
 com/example/exceptions/BookingNotFoundException.class
 com/example/exceptions/IncorrectStartEndTimeException.class
@@ -51,3 +52,4 @@ com/example/dto/admin/AdminBookingDto.class
 com/example/exceptions/AccessDeniedException.class
 com/example/controllers/AuthController.class
 com/example/services/RoomService.class
+com/example/dto/responses/AllBookingsResponse.class
