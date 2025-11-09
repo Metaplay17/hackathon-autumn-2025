@@ -187,7 +187,7 @@ public class BookingService {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void generateBookingsInit() {
-        this.generateBookings(LocalDate.now(), LocalDate.now().plusDays(3), LocalTime.of(9, 0), LocalTime.of(18, 0), 90);
+        this.generateBookings(LocalDate.now(), LocalDate.now().plusDays(7), LocalTime.of(9, 0), LocalTime.of(18, 0), 90);
 	}
 
     @Transactional

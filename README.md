@@ -25,7 +25,7 @@
 ```env
 DB_NAME=booking
 DB_USERNAME=furinyan
-DB_PASSWORD=qazedcrfvs1A
+DB_PASSWORD=password1A
 SECRET_KEY=NvWx6n3KMbeo6eQMDNepwaD7cAOYxKzmvQOR7WWl0pK
 ```
 
