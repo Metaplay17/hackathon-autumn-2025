@@ -43,7 +43,7 @@ function SignIn() {
 
     useEffect(() => {
         async function testRequest() {
-            const response = await fetch(`${API_URL}/user/profile`, {
+            const response = await fetch(`/user/profile`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
@@ -75,7 +75,7 @@ function SignIn() {
                 console.log('Отправляемые данные:', loginData);
 
                 // POST запрос через fetch
-                const response = await fetch(`${API_URL}/auth/login`, {
+                const response = await fetch(`/auth/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

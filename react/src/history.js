@@ -11,7 +11,7 @@ function History() {
     useEffect(() => {
         async function fetchHistory() {
             try {
-                const response = await fetch(`${API_URL}/user/booking-history`, {
+                const response = await fetch(`/user/booking-history`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }

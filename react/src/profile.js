@@ -13,7 +13,7 @@ function Profile() {
     useEffect(() => {
         async function fetchProfile() {
             try {
-                const response = await fetch(`${API_URL}/user/profile`, {
+                const response = await fetch(`/user/profile`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
@@ -31,7 +31,7 @@ function Profile() {
                     alert(result.message);
                     return;
                 }
-                setMeetings(result.bookings);               
+                setMeetings(result.bookings);
             } catch (error) {
                 console.error('Ошибка регистрации:', error);
                 alert(`Ошибка: ${error.message}`);

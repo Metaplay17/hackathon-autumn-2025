@@ -25,7 +25,7 @@ function HomePage() {
     useEffect(() => {
         async function fetchRooms() {
             try {
-                const response = await fetch(`${API_URL}/rooms/`, {
+                const response = await fetch(`/rooms/`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -58,7 +58,7 @@ function HomePage() {
 
         async function fetchBookings() {
             try {
-                const response = await fetch(`${API_URL}${isAdmin ? "/admin" : ""}/bookings/`, {
+                const response = await fetch(`${isAdmin ? "/admin" : ""}/bookings/`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -86,7 +86,7 @@ function HomePage() {
 
         fetchRooms();
         fetchBookings();
-    }, [API_URL, token]);
+    }, []);
 
     function selectRoomCallBack(roomId) {
         const room = rooms.find(r => r.id === roomId);

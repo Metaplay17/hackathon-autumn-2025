@@ -51,7 +51,7 @@ function Registration() {
 
     useEffect(() => {
         async function testRequest() {
-            const response = await fetch(`${API_URL}/user/profile`, {
+            const response = await fetch(`/user/profile`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
@@ -83,7 +83,7 @@ function Registration() {
                 console.log('Отправляемые данные:', registrationData);
 
                 // POST запрос через fetch
-                const response = await fetch(`${API_URL}/auth/register`, {
+                const response = await fetch(`/auth/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
