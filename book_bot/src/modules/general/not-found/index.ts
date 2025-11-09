@@ -1,0 +1,1 @@
+export { notFoundCommand } from './command'
