@@ -13,7 +13,7 @@ function Profile() {
     useEffect(() => {
         async function fetchProfile() {
             try {
-                const response = await fetch(`/user/profile`, {
+                const response = await fetch(`/api/user/profile`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }

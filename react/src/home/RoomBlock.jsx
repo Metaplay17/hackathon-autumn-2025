@@ -82,7 +82,7 @@ const RoomBookingComponent = ({ roomId, number, capacity, bookings }) => {
 
   const handleBook = async () => {
     if (selectedSlot) {
-      const response = await fetch(`/bookings/make`, {
+      const response = await fetch(`/api/bookings/make`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ const RoomBookingComponent = ({ roomId, number, capacity, bookings }) => {
 
   const handleCancelBooking = async () => {
     if (selectedSlot) {
-      const response = await fetch(`/bookings/cancel`, {
+      const response = await fetch(`/api/bookings/cancel`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -134,7 +134,7 @@ const RoomBookingComponent = ({ roomId, number, capacity, bookings }) => {
 
   const handleSaveBooking = async () => {
     if (selectedSlot) {
-      const response = await fetch(`/admin/booking/update`, {
+      const response = await fetch(`/api/admin/booking/update`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ const RoomBookingComponent = ({ roomId, number, capacity, bookings }) => {
   };
 
   const handleSaveRoom = async () => {
-      const response = await fetch(`/admin/room/update`, {
+      const response = await fetch(`/api/admin/room/update`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

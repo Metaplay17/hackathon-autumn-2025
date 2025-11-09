@@ -11,7 +11,7 @@ function History() {
     useEffect(() => {
         async function fetchHistory() {
             try {
-                const response = await fetch(`/user/booking-history`, {
+                const response = await fetch(`/api/user/booking-history`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
@@ -28,7 +28,7 @@ function History() {
                     alert(result.message);
                     return;
                 }
-                setBookings(result.bookingDtos);               
+                setBookings(result.bookingDtos);
             } catch (error) {
                 console.error('Ошибка регистрации:', error);
                 alert(`Ошибка: ${error.message}`);

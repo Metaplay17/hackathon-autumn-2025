@@ -25,7 +25,7 @@ function HomePage() {
     useEffect(() => {
         async function fetchRooms() {
             try {
-                const response = await fetch(`/rooms/`, {
+                const response = await fetch(`/api/rooms/`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -58,7 +58,7 @@ function HomePage() {
 
         async function fetchBookings() {
             try {
-                const response = await fetch(`${isAdmin ? "/admin" : ""}/bookings/`, {
+                const response = await fetch(`/api${isAdmin ? "/admin" : ""}/bookings/`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
