@@ -111,20 +111,18 @@ public class UserService {
         return bookingDtos;
     }
 
-    public List<BookingDto> getAllUserBookings(Integer userId) {
+    public List<BookingProfileDto> getAllUserBookings(Integer userId) {
         User user = userRepository.getReferenceById(userId);
         List<Booking> bookings = bookingRepository.findByUser(user);
-        ArrayList<BookingDto> bookingDtos = new ArrayList<BookingDto>();
+        ArrayList<BookingProfileDto> bookingDtos = new ArrayList<BookingProfileDto>();
         for (Booking b : bookings) {
             
-            bookingDtos.add(new BookingDto(
-                b.getId(), 
-                true,
-                false,
-                b.getRoom().getId(),
+            bookingDtos.add(new BookingProfileDto(
+                b.getId(),
+                b.getRoom().getFloor().toString() + "-" + b.getRoom().getNumber().toString(),
                 b.getStart(),
-                b.getDurationMinutes())
-            );
+                b.getDurationMinutes()
+            ));
         }
         return bookingDtos;
     }

@@ -14,4 +14,7 @@ public class UpdateBookingRequest {
     @NotNull(message = "username не задан")
     @NotBlank
     private String username;
+
+    @NotNull(message = "Статус не задан")
+    private Boolean isBlocked;
 }

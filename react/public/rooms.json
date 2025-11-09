@@ -1,0 +1,42 @@
+{
+    "status": "OK",
+    "message": "OK",
+    "rooms": [
+        {
+            "id": 3,
+            "number": 2,
+            "description": null,
+            "capability": 20,
+            "floor": 1,
+            "photo": null,
+            "open": true
+        },
+        {
+            "id": 2,
+            "number": 1,
+            "description": null,
+            "capability": 10,
+            "floor": 1,
+            "photo": null,
+            "open": false
+        },
+        {
+            "id": 4,
+            "number": 120,
+            "description": null,
+            "capability": 10,
+            "floor": 1,
+            "photo": null,
+            "open": true
+        },
+        {
+            "id": 5,
+            "number": 150,
+            "description": null,
+            "capability": 10,
+            "floor": 1,
+            "photo": null,
+            "open": true
+        }
+    ]
+}

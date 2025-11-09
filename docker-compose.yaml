@@ -1,0 +1,55 @@
+services:
+  # База данных (например, PostgreSQL)
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      # Запуск init.sql при старте контейнера
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  # Spring Boot приложение
+  backend:
+    build:
+      context: ./booking
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+      - frontend
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SECURITY_SECRET_KEY=${SECRET_KEY}
+    ports:
+      - "8080:8080"
+
+  # React (dev-сервер)
+  frontend:
+    build:
+      context: ./react
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=${API_URL}
+
+  # Nginx
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  db_data:

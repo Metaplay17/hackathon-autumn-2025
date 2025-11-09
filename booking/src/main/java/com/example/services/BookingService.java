@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,6 +77,19 @@ public class BookingService {
         return bookingDtos;
     }
 
+    public List<AdminBookingDto> getAllAdminBookings(Integer userId) {
+        List<Booking> bookings = bookingRepository.findByActiveDate();
+        List<AdminBookingDto> bookingDtos = new ArrayList<AdminBookingDto>();
+        for (Booking b : bookings) {
+            String username = null;
+            if (b.getUser() != null) {
+                username = b.getUser().getUsername();
+            }
+            bookingDtos.add(new AdminBookingDto(b.getId(), username, username != null && b.getUser().getId().equals(userId), b.getUser() == null, b.getRoom().getId(), b.getStart(), b.getDurationMinutes()));
+        }
+        return bookingDtos;
+    }
+
     public void updateBooking(Integer actionerId, UpdateBookingRequest request, Optional<User> newUser) {
         if (!newUser.isPresent()) {
             throw new UserNotFoundException("Пользователь с таким username не существует");
@@ -87,11 +102,15 @@ public class BookingService {
             User oldUser = booking.getUser();
             User actioner = userRepository.getReferenceById(actionerId);
 
+            if (request.getIsBlocked()) {
+                bookingRepository.deleteById(request.getBookingId());
+                return;
+            }
+
             booking.setUser(user);
             bookingRepository.save(booking);
             BookingLog log = new BookingLog(booking, "UPDATE", actioner, oldUser, user);
             bookingLogRepository.save(log);
-            
         }
         else {
             throw new BookingNotFoundException("Бронь с id = " + request.getBookingId() + " не найдена");
@@ -163,6 +182,12 @@ public class BookingService {
 				bookingRepository.insertIfNotExists(null, rooms.get(i), listTimes.get((j)), bookingDuration);
 			}
 	    }
+	}
+
+    @EventListener(ApplicationReadyEvent.class)
+    @Transactional
+    public void generateBookingsInit() {
+        this.generateBookings(LocalDate.now(), LocalDate.now().plusDays(3), LocalTime.of(9, 0), LocalTime.of(18, 0), 90);
 	}
 
     @Transactional

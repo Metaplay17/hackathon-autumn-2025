@@ -4,17 +4,17 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 
-import com.example.dto.BookingDto;
+import com.example.dto.BookingProfileDto;
 
 public class BookingHistoryResponse extends DefaultResponse {
-    private List<BookingDto> bokingDtos;
+    private List<BookingProfileDto> bookingDtos;
 
-    public BookingHistoryResponse(HttpStatus status, String message, List<BookingDto> bookingDtos) {
+    public BookingHistoryResponse(HttpStatus status, String message, List<BookingProfileDto> bookingDtos) {
         super(status, message);
-        this.bokingDtos = bookingDtos;
+        this.bookingDtos = bookingDtos;
     }
 
-    public List<BookingDto> getBookingDtos() {
-        return this.bokingDtos;
+    public List<BookingProfileDto> getBookingDtos() {
+        return this.bookingDtos;
     }
 }

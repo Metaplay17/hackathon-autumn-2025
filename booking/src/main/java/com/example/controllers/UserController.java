@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.dto.BookingDto;
+import com.example.dto.BookingProfileDto;
 import com.example.dto.ProfileDto;
 import com.example.dto.responses.BookingHistoryResponse;
 import com.example.dto.responses.ProfileResponse;
@@ -42,7 +42,7 @@ public class UserController {
     public ResponseEntity<BookingHistoryResponse> getBookingHistory(Authentication authentication) {
         log.info("Запрос на получение истории бронирований от userId={}", authentication.getPrincipal());
         Integer userId = (Integer)authentication.getPrincipal();
-        List<BookingDto> bookingDtos = userService.getAllUserBookings(userId);
+        List<BookingProfileDto> bookingDtos = userService.getAllUserBookings(userId);
         return ResponseEntity.ok(new BookingHistoryResponse(HttpStatus.OK, "OK", bookingDtos));
     }
 }

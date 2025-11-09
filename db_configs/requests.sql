@@ -10,9 +10,9 @@
 -- WHERE r.floor = 2 and r.number = 205;
 -- 3. Как отменить бронь, имея floor, number и нужное время + дату?
 
--- DELETE FROM bookings 
+-- DELETE FROM bookings
 -- WHERE room_id IN (
---     SELECT id FROM rooms 
+--     SELECT id FROM rooms
 --     WHERE floor = 2 AND number = 205 AND start = '2024-01-15 10:00:00'
 -- );
 

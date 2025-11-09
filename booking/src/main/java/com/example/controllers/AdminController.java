@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dto.admin.AdminAllBookingsResponse;
 import com.example.dto.admin.AdminBookingDto;
 import com.example.dto.admin.AdminBookingsFloorResponse;
 import com.example.dto.admin.UpdateBookingRequest;
@@ -76,13 +77,20 @@ public class AdminController {
         return ResponseEntity.ok(new AdminBookingsFloorResponse(HttpStatus.OK, "OK", bookings));
     }
 
+    @GetMapping("bookings/")
+    public ResponseEntity<AdminAllBookingsResponse> getAllBookings(Authentication authentication) {
+        log.info("Запрос на получение слотов от администратора userId={}", (Integer)authentication.getPrincipal());
+        List<AdminBookingDto> bookings = bookingService.getAllAdminBookings((Integer)authentication.getPrincipal());
+        return ResponseEntity.ok(new AdminAllBookingsResponse(HttpStatus.OK, "OK", bookings));
+    }
+
     @GetMapping("/booking/generate")
     public ResponseEntity<DefaultResponse> generateBooking(Authentication authentication) {
         log.info("Запрос на генерацию слотов брони от userId={}", authentication.getPrincipal());
         if (!userService.isAdmin((Integer)authentication.getPrincipal())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new DefaultResponse(HttpStatus.FORBIDDEN, "Данная функция доступна только администраторам"));
         }
-        bookingService.generateBookings(LocalDate.now(), LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(18, 0), 90);
+        bookingService.generateBookings(LocalDate.now(), LocalDate.now().plusDays(3), LocalTime.of(9, 0), LocalTime.of(18, 0), 90);
         return ResponseEntity.ok(new DefaultResponse(HttpStatus.OK, "OK"));
     }
 

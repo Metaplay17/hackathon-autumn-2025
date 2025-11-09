@@ -11,11 +11,12 @@ CREATE TABLE users (
 CREATE TABLE rooms (
     id SERIAL PRIMARY KEY,
     number INTEGER NOT NULL,
-    descritpion TEXT,
+    description TEXT,
     capability INTEGER NOT NULL,
     floor INTEGER NOT NULL,
     is_open BOOLEAN NOT NULL DEFAULT TRUE,
     photo TEXT
+    UNIQUE (floor, number)
 );
 
 -- Создание таблицы bookings
@@ -41,5 +42,5 @@ CREATE TABLE bookings_logs (
     FOREIGN KEY (actioner_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (previous_user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (new_user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE,
+    FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE
 );
