@@ -31,7 +31,7 @@ DB_PASSWORD=password1A
 SECRET_KEY=NvWx6n3KMbeo6eQMDNepwaD7cAOYxKzmvQOR7WWl0pK
 SERVER_ADDRESS=http://185.233.186.63
 ```
-
+### В SERVER_ADDRESS указывается адрес сервера, если развертывание на локальном сервере - http://localhost
 ---
 
 ## 🐳 3. Сборка и запуск приложения
