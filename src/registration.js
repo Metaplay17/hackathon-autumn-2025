@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ParsingJSON from './parsingJSON';
 
 function Registration() {
+    const API_URL = process.env.REACT_APP_API_URL;
+
     const [formData, setFormData] = useState({username: '', email: '', telegram_tag: '', password: '', secondPassword: ''});
     const [errors, setErrors] = useState({});
 
@@ -43,24 +45,32 @@ function Registration() {
             newErrors.secondPassword = 'Пароли не совпадают';
         }
 
-        if (formData.telegram_tag.length < 5 || formData.telegram_tag.length > 12) {
-            newErrors.telegram_tag = 'Длина телеграм ID должна быть от 5 до 12 символов';
-        }
-
-        if (formData.telegram_tag && !formData.telegram_tag.startsWith('@')) {
-            newErrors.telegram_tag = 'Телеграм должен начинаться с @';
-        }
-
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
+    useEffect(() => {
+        async function testRequest() {
+            const response = await fetch(`${API_URL}/user/profile`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
+            if (response.status == 200) {
+                navigate("/rooms");
+                return;
+            }
+        }
+
+        testRequest();
+    }, [])
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-            alert('Регистрация успешна!');
 
-            /*setIsLoading(true);
+            setIsLoading(true);
 
             try {
                 // Подготовка данных для отправки
@@ -68,13 +78,12 @@ function Registration() {
                     email: formData.email,
                     password: formData.password,
                     username: formData.username,
-                    telegramId: parseInt(formData.telegram_tag)
                 };
 
                 console.log('Отправляемые данные:', registrationData);
 
                 // POST запрос через fetch
-                const response = await fetch('', {
+                const response = await fetch(`${API_URL}/auth/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -82,43 +91,23 @@ function Registration() {
                     body: JSON.stringify(registrationData)
                 });
 
-                // Проверяем статус ответа
-                if (!response.ok) {
-                    // Пытаемся получить текст ошибки от сервера
-                    let errorMessage = 'Ошибка регистрации';
-                    try {
-                        const errorData = await response.json();
-                        errorMessage = errorData.message || errorMessage;
-                    } catch (parseError) {
-                        // Если не удалось распарсить JSON, используем статус
-                        errorMessage = `HTTP error! status: ${response.status}`;
-                    }
-                    throw new Error(errorMessage);
-                }
-
                 // Парсим успешный ответ
                 const result = await response.json(); // Парсинг json
 
-                // ДОБАВИТЬ РАБОТУ С ДАННЫМИ
-                
-                console.log('Успешная регистрация:', result);
-                alert('Регистрация успешна!');
+                if (!response.ok) {
+                    alert(result.message);
+                    return;
+                }
                 
                 // Переход на страницу входа
-                navigate('/signin');
+                navigate('/login');
                 
             } catch (error) {
                 console.error('Ошибка регистрации:', error);
                 alert(`Ошибка регистрации: ${error.message}`);
             } finally {
                 setIsLoading(false);
-            }*/
-
-            ParsingJSON('./sign.json').then(result => {
-                if (result.status == 'OK' || result.status == 'ОК') {
-                    navigate('/signIn');
-                }
-            });
+            }
         }
     };
 

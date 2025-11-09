@@ -3,97 +3,69 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Profile() {
+    const API_URL = process.env.REACT_APP_API_URL;
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [meetingsHtml, setMeetingsHtml] = useState('');
+    const [meetings, setMeetings] = useState([]);
     const navigate = useNavigate();
 
-    const token = localStorage.getItem('token');
-    const email = localStorage.getItem('email');
+    const username = localStorage.getItem('username');
 
-    /*setIsLoading(true);
-
+    useEffect(() => {
+        async function fetchProfile() {
             try {
-                // Подготовка данных для отправки
-                const registrationData = {
-                    email: formData.email,
-                    password: formData.password
-                };
-
-                console.log('Отправляемые данные:', registrationData);
-
-                // POST запрос через fetch
-                const response = await fetch('', {
-                    method: 'POST',
+                const response = await fetch(`${API_URL}/user/profile`, {
                     headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(registrationData)
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
                 });
 
-                // Проверяем статус ответа
-                if (!response.ok) {
-                    // Пытаемся получить текст ошибки от сервера
-                    let errorMessage = 'Ошибка регистрации';
-                    try {
-                        const errorData = await response.json();
-                        errorMessage = errorData.message || errorMessage;
-                    } catch (parseError) {
-                        // Если не удалось распарсить JSON, используем статус
-                        errorMessage = `HTTP error! status: ${response.status}`;
-                    }
-                    throw new Error(errorMessage);
+                if (response.status == 401) {
+                    navigate("/login");
+                    return;
                 }
 
                 // Парсим успешный ответ
                 const result = await response.json(); // Парсинг json
 
-                // ДОБАВИТЬ РАБОТУ С ДАННЫМИ
-                
-                console.log('Успешная регистрация:', result);
-                alert('Регистрация успешна!');
-                
-                // Переход на страницу входа
-                navigate('/signin');
-                
+                if (!response.ok) {
+                    alert(result.message);
+                    return;
+                }
+                setMeetings(result.bookings);               
             } catch (error) {
                 console.error('Ошибка регистрации:', error);
-                alert(`Ошибка регистрации: ${error.message}`);
+                alert(`Ошибка: ${error.message}`);
             } finally {
-                setIsLoading(false);
-            }*/
-    
-    useEffect(() => {
-        let div = `<div id="meetings">`;
 
-        ParsingJSON('./profile.json').then(result => {
-            for (let i = 0; i < result.dates.length; i++) {
-                div += `<div>${result.dates[i]} ${result.cab[i]}</div>`;            
             }
-            div += `</div>`;
-            setMeetingsHtml(div);
-        }).catch(error => {
-            console.error('Ошибка загрузки данных:', error);
-            setMeetingsHtml('<div id="meetings">Ошибка загрузки данных</div>');
-        });
-    }, []);
+        }
+
+        fetchProfile();
+    }, [])
+    
+    function signOut() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('privilegeLevel');
+        navigate('/login');
+    }
 
 
 
     return (
-        <body>
+        <div className="body-clone">
             <header>
                 <div className="rightHeader">
                     <img src="/icon.png" alt="icon" />
                 </div>
                 <div className="menu">
-                    <a>Бронирование</a>
-                    <a>История</a>
-                    <a>Профиль</a>
+                    <a><Link to="/rooms">Бронирование</Link></a>
+                    <a><Link to="/history">История</Link></a>
+                    <a><Link to="/profile">Профиль</Link></a>
                 </div>
                 <div className="rightHeader">
                     <img src="/Profile.png" alt="profile" />
-                    <button id="exit">Выход</button>
+                    <button id="exit" onClick={signOut}>Выход</button>
                 </div>
                 
             </header>
@@ -101,22 +73,27 @@ function Profile() {
                 <div className="left">
                     <img src="../Pr0file.png" alt="icon" />
                     <h3>Забронировать переговорную комнату</h3>
-                    <button className="darkBlueBtn" id="btnSite">На сайте</button>
+                    <button onClick={() => { navigate('/rooms'); } } className="darkBlueBtn" id="btnSite">На сайте</button>
                     <button className="blueBtn" id="btnTg">В Телеграм</button>
                 </div>
                 <div className="right">
-                    <h1 id="username">Username</h1>
+                    <h1 id="username">{username}</h1>
                     <h2>Будущие встречи:</h2>
                     <div className= "meetings" id="meetings">
-                        <p>12 декабря 12:20 к. 120</p>
-                        <p>12 декабря 12:20 к. 120</p>
+                        {
+                            meetings.map(booking => {
+                                return (
+                                    <p>{new Date(booking.start).toLocaleString()} {booking.roomName}</p>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </main>
             <footer>
                 <p>@poluYangTeam, 2025</p>
             </footer>
-        </body>
+        </div>
     );
 }
 
