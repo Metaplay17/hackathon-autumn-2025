@@ -1,3 +1,10 @@
+CREATE TABLE IF NOT EXISTS user_telegram_sessions (
+    telegram_id BIGINT PRIMARY KEY,
+    username VARCHAR(30),
+    is_logged_in BOOLEAN DEFAULT FALSE,
+    token TEXT
+);
+
 -- Создание таблицы users
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,

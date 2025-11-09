@@ -1,5 +1,18 @@
 services:
-  # База данных (например, PostgreSQL)
+  telegram:
+    build:
+      context: ./tg-bot
+      dockerfile: Dockerfile
+    # ports:
+    #   - "3000:3000"
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      SERVER_ADDRESS: ${SERVER_ADDRESS}
+    depends_on:
+      - db
+  # База данных
   db:
     image: postgres:16
     environment:
