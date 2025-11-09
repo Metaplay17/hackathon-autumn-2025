@@ -123,13 +123,11 @@ const RoomBookingComponent = ({ roomId, number, capacity, bookings }) => {
   };
 
   const handleTelegramBook = () => {
-    alert('Переход на бронирование через Telegram');
-    // Здесь можно добавить логику перехода по ссылке или открытия чата
+    window.location.href="https://t.me/cloudcom_booking_room_bot";
   };
 
   const handleTelegramCancel = () => {
-    alert('Переход на отмену брони через Telegram');
-    // Здесь можно добавить логику перехода по ссылке или открытия чата
+    window.location.href="https://t.me/cloudcom_booking_room_bot";
   };
 
   const handleSaveBooking = async () => {

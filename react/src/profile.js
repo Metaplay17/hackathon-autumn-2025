@@ -74,7 +74,7 @@ function Profile() {
                     <img src="../Pr0file.png" alt="icon" />
                     <h3>Забронировать переговорную комнату</h3>
                     <button onClick={() => { navigate('/rooms'); } } className="darkBlueBtn" id="btnSite">На сайте</button>
-                    <button className="blueBtn" id="btnTg">В Телеграм</button>
+                    <button onClick={() => window.location.href="https://t.me/cloudcom_booking_room_bot"} className="blueBtn" id="btnTg">В Телеграм</button>
                 </div>
                 <div className="right">
                     <h1 id="username">{username}</h1>
