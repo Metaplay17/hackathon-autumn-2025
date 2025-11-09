@@ -164,7 +164,7 @@ const RoomBookingComponent = ({ roomId, number, capacity, bookings }) => {
         body: JSON.stringify({
           roomId: roomId,
           capability: selectedCapability,
-          isOpen: isRoomClosed == "on"
+          isOpen: isRoomClosed != "on"
         })
       });
 
