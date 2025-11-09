@@ -52,6 +52,9 @@ CREATE TABLE IF NOT EXISTS bookings_logs (
     FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE
 );
 
+INSERT INTO users (username, email, password_hash, privilege_level)
+VALUES ('Admin', 'admin@mail.ru', '$2a$10$2WW/I4J6nSy5sCxOUbIZVeQfA5gI49D1wu.rHPWNMa.VNunW69EGq', 5);
+
 INSERT INTO rooms (number, description, capability, floor, is_open, photo) VALUES (1, 'Room 1 on Floor 1', 20, 1, true, NULL) ON CONFLICT DO NOTHING;
 INSERT INTO rooms (number, description, capability, floor, is_open, photo) VALUES (2, 'Room 2 on Floor 1', 30, 1, true, NULL) ON CONFLICT DO NOTHING;
 INSERT INTO rooms (number, description, capability, floor, is_open, photo) VALUES (3, 'Room 3 on Floor 1', 40, 1, true, NULL) ON CONFLICT DO NOTHING;
