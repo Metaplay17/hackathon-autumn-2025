@@ -233,7 +233,7 @@ const RoomBookingComponent = ({ roomId, number, capacity, bookings }) => {
                 <div className="rowIn">
                     <p>Вместимость</p>
                     <input type="number" min="0" value={selectedCapability} onChange={(e) => setSelectedCapability(e.target.value)}/>
-                    <p><input type="checkbox" id="blockRoom" onChange={(e) => setIsRoomClosed(e.target.value != "on")} /><span>Заблокировать комнату</span></p>
+                    <p><input type="checkbox" id="blockRoom" onChange={(e) => setIsRoomClosed(e.target.value)} /><span>Заблокировать комнату</span></p>
                 </div>
                 <div className="rowBtn">
                     <button onClick={() => { setIsOpenChangeRoom(false) }} className="blueBtn" id="cancelChangeRoom">Отмена</button>
