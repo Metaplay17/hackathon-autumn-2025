@@ -62,7 +62,7 @@ main{
     background-size: 250px;
 } */
 
-.background img{
+.background img {
     position: sticky;
     top:0;
     object-fit: cover;
